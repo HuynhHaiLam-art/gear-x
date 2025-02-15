@@ -1,0 +1,32 @@
+.navbar {
+  background-color: #d60000; /* Màu nền */
+  padding: 8px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px; /* Khoảng cách giữa các mục */
+  border-radius: 6px; /* Bo góc */
+  margin: 10px auto 20px auto; /* Căn giữa và tạo khoảng cách */
+  width: 80%; /* Giới hạn chiều rộng để bằng với MainBanner */
+  max-width: 1200px; /* Đảm bảo không quá to trên màn hình lớn */
+}
+
+.nav-menu {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-item {
+  color: white;
+  font-size: 14px; /* Giảm kích thước chữ */
+  font-weight: 500;
+  padding: 6px 12px; /* Thu nhỏ khoảng cách mỗi mục */
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.nav-item:hover {
+  background-color: #ff3b3b; /* Hiệu ứng hover */
+}

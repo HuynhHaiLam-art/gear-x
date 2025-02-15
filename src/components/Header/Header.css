@@ -1,0 +1,91 @@
+/* ===== HEADER CHÍNH (NỀN ĐỎ) ===== */
+.header-top {
+  background-color: #d60000;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Căn giữa nội dung */
+  padding: 6px 10px; /* Giảm padding để các phần tử gần nhau hơn */
+  font-family: Arial, sans-serif;
+  height: 50px; /* Chiều cao cố định */
+  gap: 15px; /* Giảm khoảng cách tổng thể */
+}
+
+/* Logo */
+.logo {
+  font-size: 22px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+}
+
+/* Thanh tìm kiếm */
+.search-bar {
+  display: flex;
+  align-items: center;
+  background: white;
+  border-radius: 5px;
+  overflow: hidden;
+  height: 28px; /* Căn giữa theo chiều dọc */
+}
+
+.search-bar input {
+  border: none;
+  padding: 5px;
+  width: 160px; /* Giảm chiều rộng */
+  outline: none;
+  height: 100%;
+}
+
+.search-btn {
+  background: none;
+  border: none;
+  padding: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+/* Liên hệ & Hệ thống cửa hàng */
+.contact,
+.store {
+  display: flex;
+  align-items: center;
+  gap: 3px; /* Giảm khoảng cách giữa biểu tượng và chữ */
+  font-size: 14px; /* Nhỏ hơn một chút để cân đối */
+}
+
+/* Đăng nhập & Giỏ hàng */
+.user-actions {
+  display: flex;
+  gap: 8px; /* Giảm khoảng cách giữa các mục */
+  align-items: center;
+  font-size: 14px;
+}
+
+.user-actions div {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  cursor: pointer;
+}
+
+/* ===== MENU PHỤ (NỀN ĐEN) ===== */
+.header-bottom {
+  background-color: black;
+  color: white;
+  padding: 5px 10px; /* Giảm padding để chữ gần nhau hơn */
+  display: flex;
+  justify-content: center; /* Căn giữa nội dung */
+  align-items: center;
+  gap: 8px; /* Giảm khoảng cách giữa các mục */
+  height: 35px; /* Chiều cao cố định */
+}
+
+.header-bottom span {
+  cursor: pointer;
+  padding: 3px 5px; /* Giảm padding để chữ không cách quá xa */
+}
+
+.category {
+  font-weight: bold;
+}
