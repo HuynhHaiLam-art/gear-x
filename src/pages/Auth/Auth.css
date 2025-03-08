@@ -1,42 +1,61 @@
+/* Nền tổng thể */
 .auth-container {
-    max-width: 350px;
-    margin: 50px auto;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    text-align: center;
-    background: white;
-  }
-  
-  .auth-container h2 {
-    margin-bottom: 20px;
-  }
-  
-  .auth-container form input {
-    width: 100%;
-    padding: 10px;
-    margin: 8px 0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  .auth-container button {
-    width: 100%;
-    padding: 10px;
-    background: #ff6347;
-    color: white;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
-    margin-top: 10px;
-  }
-  
-  .auth-container button:hover {
-    background: #e5533d;
-  }
-  
-  .auth-container p {
-    margin-top: 10px;
-    font-size: 14px;
-  }
-  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(to right, #f5f5dc, #fff); /* Màu nền nhẹ nhàng */
+}
+
+/* Hộp form */
+.auth-box {
+  width: 350px;
+  padding: 20px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+/* Tiêu đề */
+.auth-box h2 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Input */
+.auth-box input {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+/* Nút */
+.auth-button {
+  width: 100%;
+  padding: 10px;
+  background: #333;
+  color: white;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.auth-button:hover {
+  background: #555;
+}
+
+/* Link */
+.auth-box a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.auth-box a:hover {
+  text-decoration: underline;
+}
