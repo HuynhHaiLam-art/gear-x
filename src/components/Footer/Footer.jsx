@@ -3,7 +3,7 @@ import "./Footer.css";
 
 const Footer = () => {
   return (
-    <footer className="footer">
+    <footer className="main-footer">
       <div className="footer-top">
         <div className="newsletter">
           <input type="email" placeholder="📧 Nhập email để nhận ưu đãi" />

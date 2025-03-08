@@ -1,0 +1,48 @@
+.product-detail {
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+    display: flex;
+    gap: 20px;
+  }
+  
+  .product-detail img {
+    max-width: 400px;
+    border-radius: 8px;
+  }
+  
+  .product-info {
+    flex: 1;
+  }
+  
+  .product-info h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .old-price {
+    text-decoration: line-through;
+    color: gray;
+  }
+  
+  .new-price {
+    font-size: 20px;
+    font-weight: bold;
+    color: red;
+  }
+  
+  .buy-now {
+    background: #ff6600;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-top: 10px;
+  }
+  
+  .buy-now:hover {
+    background: #cc5200;
+  }
+  

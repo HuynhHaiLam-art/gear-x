@@ -1,99 +1,69 @@
-/* ===== HEADER CHÍNH (NỀN BE SANG TRỌNG) ===== */
-.header-top {
-  background-color: #f5f5dc; /* Màu be */
-  color: black;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 8px 15px;
-  font-family: "Poppins", sans-serif;
-  height: 55px;
-  gap: 20px;
+.main-header {
+  width: 100%;
+  background-color: #f4e1d2;
+  padding: 15px 0;
 }
 
-/* Logo */
+.header-top {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 30px;
+  width: 100%;
+}
+
 .logo {
   font-size: 24px;
   font-weight: bold;
-  text-transform: uppercase;
-  font-family: "Playfair Display", serif;
 }
 
-/* Thanh tìm kiếm */
 .search-bar {
   display: flex;
   align-items: center;
-  background: white;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  overflow: hidden;
-  height: 32px;
+  flex-grow: 1;
+  margin: 0 20px;
 }
 
 .search-bar input {
-  border: none;
-  padding: 6px;
-  width: 200px;
-  outline: none;
-  font-size: 14px;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px 0 0 5px;
 }
 
-.search-btn {
-  background: none;
+.search-bar .search-btn {
+  padding: 10px;
+  background-color: #333;
+  color: white;
   border: none;
-  padding: 6px;
+  border-radius: 0 5px 5px 0;
   cursor: pointer;
-  font-size: 16px;
-  color: gray;
 }
 
-/* Liên hệ & Hệ thống cửa hàng */
 .contact,
-.store {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 14px;
-  cursor: pointer;
-}
-
-/* Đăng nhập & Giỏ hàng */
+.store,
 .user-actions {
   display: flex;
-  gap: 10px;
   align-items: center;
-  font-size: 14px;
+  margin-left: 20px;
 }
 
-.user-actions div {
+.contact span,
+.store span,
+.user-actions span {
+  margin-left: 5px;
+}
+
+.user-actions a {
+  margin-left: 10px;
   display: flex;
   align-items: center;
-  gap: 5px;
-  cursor: pointer;
+  color: #333;
+  text-decoration: none;
 }
 
-/* ===== MENU PHỤ (NỀN ĐEN THANH LỊCH) ===== */
-.header-bottom {
-  background-color: black;
-  color: white;
-  padding: 8px 15px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 12px;
-  height: 40px;
-}
-
-.header-bottom span {
-  cursor: pointer;
-  padding: 4px 6px;
-  font-size: 14px;
-}
-
-.header-bottom span:hover {
-  color: #ff6347;
-}
-
-.category {
-  font-weight: bold;
+.user-actions .cart span {
+  margin-left: 5px;
 }

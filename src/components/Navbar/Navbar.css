@@ -1,29 +1,26 @@
 .navbar {
-  background-color: #222;
-  padding: 10px 20px;
-  display: flex;
-  justify-content: center;
-  border-radius: 6px;
-  width: 100%;
+  background-color: #333; /* Adjust the background color as needed */
+  padding: 10px 0;
 }
 
 .nav-menu {
   display: flex;
+  justify-content: center;
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
 .nav-item {
-  color: white;
-  font-size: 16px;
-  font-weight: bold;
-  padding: 10px 20px;
-  border-radius: 4px;
-  transition: all 0.3s ease;
-  cursor: pointer;
+  margin: 0 15px;
 }
 
-.nav-item:hover {
-  background-color: #ff6347;
+.nav-link {
+  color: white; /* Change the text color to white */
+  text-decoration: none;
+  font-size: 16px;
+}
+
+.nav-link:hover {
+  color: #ddd; /* Optional: Change the text color on hover */
 }

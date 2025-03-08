@@ -1,5 +1,5 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom"; // Import Link
 import "./ProductPage.css";
 
 const ProductPage = ({ products }) => {
@@ -13,10 +13,13 @@ const ProductPage = ({ products }) => {
         {filteredProducts.length > 0 ? (
           filteredProducts.map((product) => (
             <div key={product.id} className="product-card">
-              <img src={product.image} alt={product.name} />
-              <h3>{product.name}</h3>
-              <p className="old-price">{product.oldPrice.toLocaleString()}đ</p>
-              <p className="new-price">{product.newPrice.toLocaleString()}đ</p>
+              {/* Sử dụng Link để mở trang chi tiết sản phẩm */}
+              <Link to={`/product/${product.id}`}>
+                <img src={product.image} alt={product.name} />
+                <h3>{product.name}</h3>
+                <p className="old-price">{product.oldPrice.toLocaleString()}đ</p>
+                <p className="new-price">{product.newPrice.toLocaleString()}đ</p>
+              </Link>
             </div>
           ))
         ) : (
