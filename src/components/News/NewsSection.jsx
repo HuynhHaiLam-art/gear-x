@@ -3,37 +3,37 @@ import NewsCard from "./NewsCard"; // Import component con
 import "./NewsSection.css"; // Import CSS
 
 const NewsSection = () => {
-  // Dữ liệu tin tức
+  // Dữ liệu tin tức thời trang
   const newsData = [
     {
       image: "https://via.placeholder.com/150",
-      title: "Logitech ra mắt cảm biến Spot: Phát hiện nhân viên rời văn phòng",
+      title: "Gucci ra mắt bộ sưu tập Xuân-Hè 2025 với phong cách tối giản",
       date: "05/02/2025",
     },
     {
       image: "https://via.placeholder.com/150",
-      title: "NVIDIA RTX 5090 và 5090D Gập Sự Cố Hãng Loạt Sau Khi Cập Nhật Driver",
+      title: "5 Xu hướng thời trang đường phố sẽ bùng nổ trong năm nay",
       date: "04/02/2025",
     },
     {
       image: "https://via.placeholder.com/150",
-      title: "Top Game Hỗ Trợ DLSS 4 Trên Card Đồ Họa RTX 5000 Mới Nhất",
+      title: "Uniqlo hợp tác với NTK Việt Nam, ra mắt BST mang đậm văn hóa Á Đông",
       date: "03/02/2025",
     },
   ];
 
-  // Dữ liệu hướng dẫn
+  // Dữ liệu hướng dẫn thời trang
   const guidesData = [
-    { title: "Hướng Dẫn Setting CS2 Tốt Nhất Để Tăng FPS", date: "23/01/2025" },
-    { title: "Xem Ngay Cách Tải Video Pinterest Về Điện Thoại, Máy Tính", date: "23/12/2024" },
-    { title: "4 Tip Giúp Garena Đổi Mật Khẩu Vô Cùng Nhanh Chóng Và Đơn Giản Nhất", date: "23/12/2024" },
+    { title: "Cách phối đồ tối giản nhưng vẫn nổi bật", date: "23/01/2025" },
+    { title: "Mẹo chọn giày sneaker phù hợp với mọi outfit", date: "23/12/2024" },
+    { title: "4 lỗi phối đồ thường gặp và cách khắc phục", date: "23/12/2024" },
   ];
 
   return (
     <div className="news-section">
-      {/* Tin tức mới */}
+      {/* Tin tức thời trang */}
       <div className="news-block">
-        <h2 className="news-title">📢 TIN TỨC MỚI</h2>
+        <h2 className="news-title">👗 TIN TỨC THỜI TRANG</h2>
         <div className="news-list">
           {newsData.map((news, index) => (
             <NewsCard key={index} image={news.image} title={news.title} date={news.date} />
@@ -41,9 +41,9 @@ const NewsSection = () => {
         </div>
       </div>
 
-      {/* Hướng dẫn */}
+      {/* Hướng dẫn thời trang */}
       <div className="news-block">
-        <h2 className="news-title">📌 HƯỚNG DẪN</h2>
+        <h2 className="news-title">📌 HƯỚNG DẪN THỜI TRANG</h2>
         <ul className="guide-list">
           {guidesData.map((guide, index) => (
             <li key={index} className="guide-item">

@@ -1,35 +1,26 @@
-import React, { useState } from "react";
-import MegaMenu from "./MegaMenu";
+import React from "react";
+import { Link } from "react-router-dom";
 import "./Navbar.css";
 
 const menuItems = [
-  { name: "Laptop", submenu: true },
-  { name: "Xgear PC", submenu: false },
-  { name: "Màn hình", submenu: false },
-  { name: "Linh Kiện", submenu: false },
-  { name: "Gaming Gear", submenu: false },
-  { name: "Phụ kiện", submenu: false },
-  { name: "Tự chọn cấu hình", submenu: false },
-  { name: "Phần mềm", submenu: false },
-  { name: "Best seller", submenu: false },
-  { name: "Tin công nghệ", submenu: false },
+  { name: "Nam", path: "/products/Nam" },
+  { name: "Nữ", path: "/products/Nữ" },
+  { name: "Trẻ em", path: "/products/Trẻ em" },
+  { name: "Phụ kiện", path: "/products/Phụ kiện" },
+  { name: "Giày dép", path: "/products/Giày dép" },
+  { name: "Bộ sưu tập", path: "/products/Bộ sưu tập" },
+  { name: "Sale", path: "/products/Sale" },
+  { name: "Xu hướng", path: "/products/Xu hướng" },
+  { name: "Tin tức", path: "/products/Tin tức" },
 ];
 
 const Navbar = () => {
-  const [activeMenu, setActiveMenu] = useState(null);
-
   return (
     <nav className="navbar">
       <ul className="nav-menu">
         {menuItems.map((item, index) => (
-          <li
-            key={index}
-            className="nav-item"
-            onMouseEnter={() => item.submenu && setActiveMenu(item.name)}
-            onMouseLeave={() => setActiveMenu(null)}
-          >
-            {item.name}
-            {item.submenu && activeMenu === item.name && <MegaMenu />}
+          <li key={index} className="nav-item">
+            <Link to={item.path} className="nav-link">{item.name}</Link>
           </li>
         ))}
       </ul>

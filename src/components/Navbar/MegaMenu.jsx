@@ -1,44 +1,21 @@
 import React from "react";
-import "./Navbar.css";
+import "./MegaMenu.css";
 
-const MegaMenu = () => {
+const MegaMenu = ({ category }) => {
+  const menuData = {
+    Nam: ["Áo thun", "Áo sơ mi", "Áo khoác", "Quần jeans", "Quần short", "Phụ kiện"],
+    Nữ: ["Váy", "Áo kiểu", "Áo khoác", "Quần legging", "Quần jeans", "Túi xách"],
+    "Trẻ em": ["Áo thun", "Áo khoác", "Quần bò", "Váy", "Bộ đồ", "Giày dép"],
+  };
+
   return (
     <div className="mega-menu">
       <div className="mega-column">
-        <h3>Thương hiệu</h3>
+        <h3>{category}</h3>
         <ul>
-          <li>ACER | PREDATOR</li>
-          <li>ASUS | ROG Gaming</li>
-          <li>MSI</li>
-          <li>LENOVO</li>
-          <li>GIGABYTE | AORUS</li>
-          <li>HP | OMEN</li>
-        </ul>
-      </div>
-      <div className="mega-column">
-        <h3>MSI Gaming</h3>
-        <ul>
-          <li>Cyborg / Thin GF Series</li>
-          <li>Sword / Katana Series</li>
-          <li>Creator Series</li>
-          <li>Crosshair | Pulse | GP Series</li>
-          <li>GE Series</li>
-        </ul>
-      </div>
-      <div className="mega-column">
-        <h3>LENOVO Gaming</h3>
-        <ul>
-          <li>Yoga Series</li>
-          <li>LOQ Series</li>
-          <li>Legion</li>
-        </ul>
-      </div>
-      <div className="mega-column">
-        <h3>Handheld / Console</h3>
-        <ul>
-          <li>Asus</li>
-          <li>Lenovo</li>
-          <li>MSI</li>
+          {menuData[category]?.map((item, index) => (
+            <li key={index}>{item}</li>
+          ))}
         </ul>
       </div>
     </div>

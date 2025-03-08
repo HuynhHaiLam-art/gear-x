@@ -6,10 +6,10 @@ import "swiper/css/navigation";
 import "./FlashSaleSlider.css"; // File CSS tùy chỉnh
 
 const FlashSaleSlider = ({ products }) => {
-  const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+  const [timeLeft, setTimeLeft] = useState({ hours: 0, minutes: 0, seconds: 0 });
 
   useEffect(() => {
-    const targetTime = new Date().getTime() + 12 * 60 * 60 * 1000; // 12 tiếng Flash Sale
+    const targetTime = new Date().getTime() + 12 * 60 * 60 * 1000; // 12 giờ Flash Sale
     const interval = setInterval(() => {
       const now = new Date().getTime();
       const difference = targetTime - now;
@@ -18,10 +18,9 @@ const FlashSaleSlider = ({ products }) => {
         clearInterval(interval);
       } else {
         setTimeLeft({
-          days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-          hours: Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
-          minutes: Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60)),
-          seconds: Math.floor((difference % (1000 * 60)) / 1000),
+          hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+          minutes: Math.floor((difference / (1000 * 60)) % 60),
+          seconds: Math.floor((difference / 1000) % 60),
         });
       }
     }, 1000);
@@ -31,14 +30,14 @@ const FlashSaleSlider = ({ products }) => {
 
   return (
     <div className="flash-sale-container">
-      <h2 className="flash-sale-title">🔥 FLASH SALE 🔥</h2>
+      <h2 className="flash-sale-title">🔥 FLASH SALE - THỜI TRANG SIÊU GIẢM GIÁ 🔥</h2>
       <div className="flash-sale-timer">
-        ⏳ {timeLeft.hours}h {timeLeft.minutes}m {timeLeft.seconds}s
+        ⏳ Còn lại: {timeLeft.hours}h {timeLeft.minutes}m {timeLeft.seconds}s
       </div>
 
       <Swiper
         modules={[Navigation, Autoplay]}
-        spaceBetween={20}
+        spaceBetween={15}
         slidesPerView={4}
         navigation
         autoplay={{ delay: 3000 }}

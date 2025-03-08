@@ -5,14 +5,14 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "./MainBanner.css";
-import banner1 from "../../assets/images/banner1.webp"
-import banner2 from "../../assets/images/banner2.webp"
-import banner3 from "../../assets/images/banner3.webp"
+import banner8 from "../../assets/images/banner8.jpg"
+import banner9 from "../../assets/images/banner9.jpeg"
+import banner10 from "../../assets/images/banner10.jpg"
 
 const banners = [
-  banner1,
-  banner2,
-  banner3,
+  banner8,
+  banner9,
+  banner10,
 ];
 
 const MainBanner = () => {

@@ -1,114 +1,124 @@
 .footer {
-    background: #111;
-    color: white;
-    padding: 20px;
-    font-family: Arial, sans-serif;
-  }
-  
-  .footer-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid #333;
-    padding-bottom: 10px;
-  }
-  
-  .newsletter {
-    display: flex;
-    gap: 10px;
-  }
-  
-  .newsletter input {
-    padding: 8px;
-    border: none;
-    border-radius: 4px;
-  }
-  
-  .newsletter button {
-    background: red;
-    color: white;
-    border: none;
-    padding: 8px 15px;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .social-icons a {
-    color: white;
-    margin: 0 10px;
-    font-size: 20px;
-    transition: 0.3s;
-  }
-  
-  .social-icons a:hover {
-    color: #ff4d4d;
-  }
-  
-  .footer-content {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
-  }
-  
-  .footer-section {
-    width: 22%;
-  }
-  
-  .footer-section h4 {
-    border-bottom: 2px solid red;
-    padding-bottom: 5px;
-  }
-  
-  .footer-section ul {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .footer-section ul li {
-    margin: 5px 0;
-    cursor: pointer;
-  }
-  
-  .footer-section ul li:hover {
-    color: #ff4d4d;
-  }
-  
-  .certification, .payment-icons {
-    margin-top: 10px;
-    max-width: 150px;
-  }
-  
-  .footer-bottom {
-    text-align: center;
-    border-top: 1px solid #333;
-    padding-top: 10px;
-    margin-top: 10px;
-  }
-  
-  .floating-buttons {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  
-  .floating-buttons a {
-    display: block;
-    padding: 10px;
-    border-radius: 5px;
-    color: white;
-    text-align: center;
-    width: 150px;
-    transition: 0.3s;
-  }
-  
-  .call-btn { background: red; }
-  .messenger-btn { background: #0078ff; }
-  .zalo-btn { background: #0088cc; }
-  
-  .floating-buttons a:hover {
-    opacity: 0.8;
-  }
-  
+  background: #222;
+  color: white;
+  padding: 20px;
+  font-family: "Arial", sans-serif;
+}
+
+.footer-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #444;
+  padding-bottom: 10px;
+}
+
+.newsletter {
+  display: flex;
+  gap: 10px;
+}
+
+.newsletter input {
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  width: 250px;
+}
+
+.newsletter button {
+  background: #e91e63;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.social-icons a {
+  color: white;
+  margin: 0 10px;
+  font-size: 22px;
+  transition: 0.3s;
+}
+
+.social-icons a:hover {
+  color: #e91e63;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.footer-section {
+  width: 23%;
+}
+
+.footer-section h4 {
+  border-bottom: 2px solid #e91e63;
+  padding-bottom: 5px;
+}
+
+.footer-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-section ul li {
+  margin: 8px 0;
+}
+
+.footer-section ul li a {
+  text-decoration: none;
+  color: white;
+  transition: 0.3s;
+}
+
+.footer-section ul li a:hover {
+  color: #e91e63;
+}
+
+.certification, .payment-icons, .shipping-icons {
+  margin-top: 10px;
+  max-width: 180px;
+}
+
+.footer-bottom {
+  text-align: center;
+  border-top: 1px solid #444;
+  padding-top: 10px;
+  margin-top: 10px;
+}
+
+.floating-buttons {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.floating-buttons a {
+  display: block;
+  padding: 12px;
+  border-radius: 5px;
+  color: white;
+  text-align: center;
+  width: 180px;
+  transition: 0.3s;
+  font-weight: bold;
+}
+
+.call-btn {
+  background: #e91e63;
+}
+
+.zalo-btn {
+  background: #0088cc;
+}
+
+.floating-buttons a:hover {
+  opacity: 0.8;
+}
