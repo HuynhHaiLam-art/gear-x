@@ -12,7 +12,6 @@ import LoginPage from "./pages/Auth/LoginPage.jsx";
 import RegisterPage from "./pages/Auth/RegisterPage.jsx";
 import CartPage from "./pages/CartPage/CartPage.jsx";
 import Home from './pages/HomePage/HomePage.jsx';
-import TestApi from "./components/TestApi/TestApi.jsx";
 import ProductDetails from "./pages/ProductDetails/ProductDetails.jsx"; // Import trang chi tiết sản phẩm
 
 // Ảnh sản phẩm
@@ -40,7 +39,7 @@ function App() {
           <>
             <MainBanner />
             <AdSlider />
-            <TestApi />
+            
             <FlashSaleSlider products={sampleProducts} />
             <Home />
             <NewsSection />
