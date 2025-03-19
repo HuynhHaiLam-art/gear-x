@@ -1,8 +1,8 @@
 import React from "react";
 import AuthFactory from "./AuthFactory";
 
-const LoginPage = () => {
-  return <AuthFactory type="login" />;
+const LoginPage = ({ setUser }) => {
+  return <AuthFactory type="login" setUser={setUser} />;
 };
 
 export default LoginPage;
