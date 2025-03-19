@@ -1,5 +1,5 @@
-import React from "react";
-import { Routes, Route } from "react-router-dom";
+import React, { useState } from "react";
+import { Routes, Route, useNavigate, Navigate } from "react-router-dom";
 import Header from './components/Header/Header.jsx';
 import Navbar from "./components/Navbar/Navbar.jsx";
 import MainBanner from "./components/MainBanner/MainBanner.jsx";
@@ -13,7 +13,8 @@ import RegisterPage from "./pages/Auth/RegisterPage.jsx";
 import CartPage from "./pages/CartPage/CartPage.jsx";
 import Home from './pages/HomePage/HomePage.jsx';
 import TestApi from "./components/TestApi/TestApi.jsx";
-import ProductDetails from "./pages/ProductDetails/ProductDetails.jsx"; // Import trang chi tiết sản phẩm
+import ProductDetails from "./pages/ProductDetails/ProductDetails.jsx"; 
+import AdminPage from "./pages/AdminPage/AdminPage.jsx"; // Thêm trang admin
 
 // Ảnh sản phẩm
 import pd5 from "./assets/images/pd5.webp";
@@ -29,7 +30,16 @@ const sampleProducts = [
   { id: 4, name: "Túi xách nữ thời trang", image: pd8, oldPrice: 600000, newPrice: 450000, sold: 20, total: 50, category: "Nữ" },
 ];
 
+// Tài khoản giả để đăng nhập
+const fakeUsers = [
+  { username: "admin", password: "admin123", role: "admin" },
+  { username: "user", password: "user123", role: "user" },
+];
+
 function App() {
+  const [user, setUser] = useState(null);
+  const navigate = useNavigate();
+
   return (
     <div>
       <Header />
@@ -48,15 +58,16 @@ function App() {
         } />
 
         {/* Trang đăng nhập, đăng ký, giỏ hàng */}
-        <Route path="/login" element={<LoginPage />} />
+        <Route path="/login" element={<LoginPage setUser={setUser} />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/cart" element={<CartPage />} />
 
-        {/* Trang sản phẩm theo danh mục */}
+        {/* Trang sản phẩm */}
         <Route path="/products/:category" element={<ProductPage products={sampleProducts} />} />
-
-        {/* Trang chi tiết sản phẩm */}
         <Route path="/product/:id" element={<ProductDetails products={sampleProducts} />} />
+
+        {/* Trang Admin - chỉ cho phép admin vào */}
+        <Route path="/admin" element={user?.role === "admin" ? <AdminPage /> : <Navigate to="/login" />} />
       </Routes>
       <Footer />
     </div>

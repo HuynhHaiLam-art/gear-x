@@ -1,0 +1,102 @@
+.admin-container {
+    display: flex;
+    min-height: 100vh;
+  }
+  
+  .sidebar {
+    width: 250px;
+    background: #222;
+    color: white;
+    padding: 20px;
+  }
+  
+  .admin-info {
+    text-align: center;
+  }
+  
+  .admin-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+  }
+  
+  .menu {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+  }
+  
+  .menu li {
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  .menu li:hover {
+    background: #444;
+  }
+  
+  .admin-content {
+    flex: 1;
+    padding: 20px;
+    background: #f4f4f4;
+  }
+  
+  h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .add-product {
+    background: green;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .add-product:hover {
+    background: darkgreen;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background: white;
+  }
+  
+  th, td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+  }
+  
+  th {
+    background: #222;
+    color: white;
+  }
+  
+  button {
+    padding: 5px 10px;
+    margin: 2px;
+    border: none;
+    cursor: pointer;
+    border-radius: 3px;
+  }
+  
+  .edit-btn {
+    background: green;
+    color: white;
+  }
+  
+  .detail-btn {
+    background: blue;
+    color: white;
+  }
+  
+  .delete-btn {
+    background: red;
+    color: white;
+  }
+  
