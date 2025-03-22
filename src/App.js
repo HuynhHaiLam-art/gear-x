@@ -13,8 +13,7 @@ import RegisterPage from "./pages/Auth/RegisterPage.jsx";
 import CartPage from "./pages/CartPage/CartPage.jsx";
 import Home from './pages/HomePage/HomePage.jsx';
 import TestApi from "./components/TestApi/TestApi.jsx";
-import ProductDetails from "./pages/ProductDetails/ProductDetails.jsx"; 
-import AdminPage from "./pages/AdminPage/AdminPage.jsx"; // Thêm trang admin
+import ProductDetails from "./pages/ProductDetails/ProductDetails.jsx"; // Import trang chi tiết sản phẩm
 
 // Ảnh sản phẩm
 import pd5 from "./assets/images/pd5.webp";
@@ -50,7 +49,7 @@ function App() {
           <>
             <MainBanner />
             <AdSlider />
-            <TestApi />
+            
             <FlashSaleSlider products={sampleProducts} />
             <Home />
             <NewsSection />
