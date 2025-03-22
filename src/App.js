@@ -12,8 +12,9 @@ import LoginPage from "./pages/Auth/LoginPage.jsx";
 import RegisterPage from "./pages/Auth/RegisterPage.jsx";
 import CartPage from "./pages/CartPage/CartPage.jsx";
 import Home from './pages/HomePage/HomePage.jsx';
-import TestApi from "./components/TestApi/TestApi.jsx";
-import ProductDetails from "./pages/ProductDetails/ProductDetails.jsx"; // Import trang chi tiết sản phẩm
+//import TestApi from "./components/TestApi/TestApi.jsx";
+import ProductDetails from "./pages/ProductDetails/ProductDetails.jsx"; 
+import AdminPage from "./pages/AdminPage/AdminPage.jsx"; 
 
 // Ảnh sản phẩm
 import pd5 from "./assets/images/pd5.webp";
@@ -30,14 +31,10 @@ const sampleProducts = [
 ];
 
 // Tài khoản giả để đăng nhập
-const fakeUsers = [
-  { username: "admin", password: "admin123", role: "admin" },
-  { username: "user", password: "user123", role: "user" },
-];
 
 function App() {
   const [user, setUser] = useState(null);
-  const navigate = useNavigate();
+  
 
   return (
     <div>
