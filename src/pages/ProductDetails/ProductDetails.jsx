@@ -1,68 +1,181 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
+import { FaShoppingCart, FaHeart, FaStar, FaShare, FaMinus, FaPlus } from 'react-icons/fa';
 import "./ProductDetails.css";
 
-// Sample products data
 const sampleProducts = [
-  { id: 1, name: "Áo thun nam basic", image: "https://owlbrand.vn/wp-content/uploads/2024/12/AO-SWEATER-HOA-TIET-OWL-4-1-527x790.jpg", oldPrice: 250000, newPrice: 180000, sold: 45, total: 100, category: "Nam" },
-  { id: 2, name: "Quần jeans nữ cá tính", image: "/assets/images/pd6.webp", oldPrice: 450000, newPrice: 320000, sold: 30, total: 80, category: "Nữ" },
-  { id: 3, name: "Giày sneaker trắng nam", image: "C:/Users/Admin/Desktop/gear-x/src/assets/images/pd7.webp", oldPrice: 800000, newPrice: 650000, sold: 50, total: 120, category: "Nam" },
-  { id: 4, name: "Túi xách nữ thời trang", image: "/assets/images/pd8.webp", oldPrice: 600000, newPrice: 450000, sold: 20, total: 50, category: "Nữ" },
+  {
+    id: 1,
+    name: "Áo thun nam basic",
+    image: "/assets/images/pd5.webp",
+    oldPrice: 250000,
+    newPrice: 180000,
+    sold: 45,
+    total: 100,
+    category: "Nam",
+    description: "Áo thun nam basic chất liệu cotton 100%, form regular fit thoải mái",
+    rating: 4.5,
+    reviews: 120,
+    sizes: ["S", "M", "L", "XL"],
+    colors: ["Trắng", "Đen", "Xám", "Navy"]
+  },
+  // ... other products
 ];
 
 const ProductDetails = () => {
-  const { id } = useParams(); // Lấy product ID từ URL
+  const { id } = useParams();
   const product = sampleProducts.find((p) => p.id.toString() === id);
+  const [selectedSize, setSelectedSize] = useState('');
+  const [selectedColor, setSelectedColor] = useState('');
   const [quantity, setQuantity] = useState(1);
+  const [mainImage, setMainImage] = useState(product?.image);
 
   if (!product) {
-    return <h2>Không tìm thấy sản phẩm</h2>;
+    return <div className="not-found">Không tìm thấy sản phẩm</div>;
   }
 
-  // Hàm tăng giảm số lượng
-  const increaseQuantity = () => {
-    if (quantity < product.total) setQuantity(quantity + 1);
+  const handleQuantityChange = (action) => {
+    if (action === 'increase') {
+      setQuantity(prev => prev < product.total ? prev + 1 : prev);
+    } else {
+      setQuantity(prev => prev > 1 ? prev - 1 : 1);
+    }
   };
 
-  const decreaseQuantity = () => {
-    if (quantity > 1) setQuantity(quantity - 1);
-  };
-
-  // Hàm thêm vào giỏ hàng
-  const addToCart = () => {
-    alert(`Đã thêm ${quantity} sản phẩm vào giỏ hàng!`);
-  };
+  // Tạo mảng hình ảnh giả định cho gallery
+  const productGallery = [
+    product.image,
+    `/assets/images/pd${product.id}_2.webp`,
+    `/assets/images/pd${product.id}_3.webp`,
+    `/assets/images/pd${product.id}_4.webp`,
+  ];
 
   return (
-    <div className="product-details">
-      <div className="product-container">
-        <div className="product-image">
-          <img src={product.image} alt={product.name} />
-        </div>
-        <div className="product-info">
-          <h1>{product.name}</h1>
-          <p className="category">Danh mục: {product.category}</p>
-          <p className="price">
-            Giá cũ: <span className="old-price">{product.oldPrice.toLocaleString()}đ</span>
-          </p>
-          <p className="price">
-            Giá mới: <span className="new-price">{product.newPrice.toLocaleString()}đ</span>
-          </p>
-          <p className="sold">Đã bán: {product.sold}</p>
-          <p className="total">Số lượng có sẵn: {product.total}</p>
-  
-          <div className="quantity-selector">
-            <button onClick={decreaseQuantity}>-</button>
-            <input type="text" value={quantity} readOnly />
-            <button onClick={increaseQuantity}>+</button>
+    <div className="product-details-container">
+      <div className="product-details-wrapper">
+        {/* Left Section - Product Images */}
+        <div className="product-gallery">
+          <div className="main-image">
+            <img src={mainImage} alt={product.name} />
           </div>
-  
-          <button className="buy-now-button">Mua ngay</button>
-          <button className="add-to-cart-button" onClick={addToCart}>Thêm vào giỏ hàng</button>
+          <div className="thumbnail-container">
+            {productGallery.map((img, index) => (
+              <div 
+                key={index} 
+                className={`thumbnail ${mainImage === img ? 'active' : ''}`}
+                onClick={() => setMainImage(img)}
+              >
+                <img src={img} alt={`${product.name} - ${index + 1}`} />
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Right Section - Product Info */}
+        <div className="product-info">
+          <div className="product-header">
+            <h1>{product.name}</h1>
+            <div className="product-meta">
+              <div className="rating">
+                <span className="stars">
+                  {[...Array(5)].map((_, index) => (
+                    <FaStar 
+                      key={index}
+                      className={index < Math.floor(product.rating) ? 'filled' : 'empty'}
+                    />
+                  ))}
+                </span>
+                <span className="rating-text">{product.rating}</span>
+                <span className="reviews">({product.reviews} đánh giá)</span>
+              </div>
+              <div className="sold-count">Đã bán: {product.sold}</div>
+            </div>
+          </div>
+
+          <div className="product-price">
+            <div className="current-price">
+              {product.newPrice.toLocaleString()}đ
+            </div>
+            <div className="original-price">
+              <span className="old-price">{product.oldPrice.toLocaleString()}đ</span>
+              <span className="discount">
+                -{Math.round((1 - product.newPrice/product.oldPrice) * 100)}%
+              </span>
+            </div>
+          </div>
+
+          <div className="product-options">
+            <div className="size-selector">
+              <h3>Kích thước</h3>
+              <div className="options">
+                {product.sizes.map(size => (
+                  <button
+                    key={size}
+                    className={`option ${selectedSize === size ? 'selected' : ''}`}
+                    onClick={() => setSelectedSize(size)}
+                  >
+                    {size}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="color-selector">
+              <h3>Màu sắc</h3>
+              <div className="options">
+                {product.colors.map(color => (
+                  <button
+                    key={color}
+                    className={`option ${selectedColor === color ? 'selected' : ''}`}
+                    onClick={() => setSelectedColor(color)}
+                  >
+                    {color}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="quantity-selector">
+              <h3>Số lượng</h3>
+              <div className="quantity-controls">
+                <button onClick={() => handleQuantityChange('decrease')}>
+                  <FaMinus />
+                </button>
+                <span>{quantity}</span>
+                <button onClick={() => handleQuantityChange('increase')}>
+                  <FaPlus />
+                </button>
+              </div>
+              <span className="stock">Còn {product.total} sản phẩm</span>
+            </div>
+          </div>
+
+          <div className="product-actions">
+            <button className="add-to-cart">
+              <FaShoppingCart /> Thêm vào giỏ hàng
+            </button>
+            <button className="buy-now">
+              Mua ngay
+            </button>
+          </div>
+
+          <div className="additional-actions">
+            <button className="wishlist">
+              <FaHeart /> Yêu thích
+            </button>
+            <button className="share">
+              <FaShare /> Chia sẻ
+            </button>
+          </div>
+
+          <div className="product-description">
+            <h3>Mô tả sản phẩm</h3>
+            <p>{product.description}</p>
+          </div>
         </div>
       </div>
     </div>
-  );  
+  );
 };
 
 export default ProductDetails;
