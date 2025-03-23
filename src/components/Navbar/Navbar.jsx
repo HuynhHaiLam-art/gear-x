@@ -11,7 +11,7 @@ const menuItems = [
   { name: "Bộ sưu tập", path: "/products/Bộ sưu tập" },
   { name: "Sale", path: "/products/Sale" },
   { name: "Xu hướng", path: "/products/Xu hướng" },
-  { name: "Tin tức", path: "/products/Tin tức" },
+  { name: "Tất cả sản phẩm", path: "/products/all" },
 ];
 
 const Navbar = () => {

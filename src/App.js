@@ -3,7 +3,7 @@ import { Routes, Route, useNavigate, Navigate } from "react-router-dom";
 import Header from './components/Header/Header.jsx';
 import Navbar from "./components/Navbar/Navbar.jsx";
 import MainBanner from "./components/MainBanner/MainBanner.jsx";
-import AdSlider from "./components/AdSlider/AdSlider.jsx";
+
 import FlashSaleSlider from "./components/FlashSaleSlider/FlashSaleSlider.jsx";
 import NewsSection from "./components/News/NewsSection.jsx";
 import Footer from "./components/Footer/Footer.jsx";
@@ -15,6 +15,7 @@ import Home from './pages/HomePage/HomePage.jsx';
 //import TestApi from "./components/TestApi/TestApi.jsx";
 import ProductDetails from "./pages/ProductDetails/ProductDetails.jsx"; 
 import AdminPage from "./pages/AdminPage/AdminPage.jsx"; 
+import ProductService from "./pages/ProductPage/ProductService.jsx";
 
 // Ảnh sản phẩm
 import pd5 from "./assets/images/pd5.webp";
@@ -45,10 +46,12 @@ function App() {
         <Route path="/" element={
           <>
             <MainBanner />
-            <AdSlider />
+            
             
             <FlashSaleSlider products={sampleProducts} />
+            
             <Home />
+            
             <NewsSection />
           </>
         } />
@@ -65,6 +68,7 @@ function App() {
         {/* Trang Admin - chỉ cho phép admin vào */}
         <Route path="/admin" element={user?.role === "admin" ? <AdminPage /> : <Navigate to="/login" />} />
       </Routes>
+      
       <Footer />
     </div>
   );

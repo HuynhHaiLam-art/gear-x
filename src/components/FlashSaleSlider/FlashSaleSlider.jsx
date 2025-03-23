@@ -16,7 +16,7 @@ const FlashSaleSlider = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get("http://localhost:5132/api/Products", {
+        const response = await axios.get("http://localhost:5000/api/Products/all", {
           headers: {
             "Accept": "application/json",
             "Content-Type": "application/json",
