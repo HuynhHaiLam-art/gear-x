@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import "./ProductDetails.css";
 
@@ -11,33 +11,58 @@ const sampleProducts = [
 ];
 
 const ProductDetails = () => {
-  const { id } = useParams(); // Get product ID from URL
+  const { id } = useParams(); // Lấy product ID từ URL
   const product = sampleProducts.find((p) => p.id.toString() === id);
+  const [quantity, setQuantity] = useState(1);
 
   if (!product) {
     return <h2>Không tìm thấy sản phẩm</h2>;
   }
 
+  // Hàm tăng giảm số lượng
+  const increaseQuantity = () => {
+    if (quantity < product.total) setQuantity(quantity + 1);
+  };
+
+  const decreaseQuantity = () => {
+    if (quantity > 1) setQuantity(quantity - 1);
+  };
+
+  // Hàm thêm vào giỏ hàng
+  const addToCart = () => {
+    alert(`Đã thêm ${quantity} sản phẩm vào giỏ hàng!`);
+  };
+
   return (
     <div className="product-details">
-      <div className="product-image">
-        <img src={product.image} alt={product.name} />
-      </div>
-      <div className="product-info">
-        <h1>{product.name}</h1>
-        <p className="category">Danh mục: {product.category}</p>
-        <p className="price">
-          Giá cũ: <span className="old-price">{product.oldPrice.toLocaleString()}đ</span>
-        </p>
-        <p className="price">
-          Giá mới: <span className="new-price">{product.newPrice.toLocaleString()}đ</span>
-        </p>
-        <p className="sold">Đã bán: {product.sold}</p>
-        <p className="total">Số lượng có sẵn: {product.total}</p>
-        <button className="buy-now-button">Mua ngay</button>
+      <div className="product-container">
+        <div className="product-image">
+          <img src={product.image} alt={product.name} />
+        </div>
+        <div className="product-info">
+          <h1>{product.name}</h1>
+          <p className="category">Danh mục: {product.category}</p>
+          <p className="price">
+            Giá cũ: <span className="old-price">{product.oldPrice.toLocaleString()}đ</span>
+          </p>
+          <p className="price">
+            Giá mới: <span className="new-price">{product.newPrice.toLocaleString()}đ</span>
+          </p>
+          <p className="sold">Đã bán: {product.sold}</p>
+          <p className="total">Số lượng có sẵn: {product.total}</p>
+  
+          <div className="quantity-selector">
+            <button onClick={decreaseQuantity}>-</button>
+            <input type="text" value={quantity} readOnly />
+            <button onClick={increaseQuantity}>+</button>
+          </div>
+  
+          <button className="buy-now-button">Mua ngay</button>
+          <button className="add-to-cart-button" onClick={addToCart}>Thêm vào giỏ hàng</button>
+        </div>
       </div>
     </div>
-  );
+  );  
 };
 
 export default ProductDetails;
