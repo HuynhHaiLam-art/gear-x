@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import "./ProductPage.css";
 import ProductService from './ProductService';
-import { FiShoppingCart, FiHeart, FiSearch, FiFilter } from 'react-icons/fi'; // Install with: npm install react-icons
+import { FiShoppingCart, FiHeart, FiSearch, FiFilter } from 'react-icons/fi';
 
 const ProductPage = () => {
   const { category } = useParams();
@@ -131,7 +131,11 @@ const ProductPage = () => {
                     <button className="action-btn wishlist-btn" title="Add to wishlist">
                       <FiHeart />
                     </button>
-                    <Link to={`/product/${product.productId}`} className="action-btn view-btn" title="View details">
+                    <Link 
+                      to={`/product-detail/${product.productId}`} 
+                      className="action-btn view-btn" 
+                      title="View details"
+                    >
                       <FiSearch />
                     </Link>
                   </div>
@@ -159,27 +163,6 @@ const ProductPage = () => {
                       {product.price ? Number(product.price).toLocaleString() : "N/A"}đ
                     </span>
                   </div>
-                  
-                  {product.variants && product.variants.length > 0 && (
-                    <div className="product-variants">
-                      <span className="variants-label">Options:</span>
-                      <div className="variants-preview">
-                        {product.variants.slice(0, 3).map((variant, idx) => (
-                          <span key={idx} className="variant-chip" 
-                            style={{backgroundColor: variant.color?.toLowerCase() === 'white' ? '#f5f5f5' : 
-                                   variant.color?.toLowerCase() === 'black' ? '#333' : 
-                                   variant.color?.toLowerCase() === 'gray' ? '#888' : null,
-                                   color: ['black', 'navy', 'blue'].includes(variant.color?.toLowerCase()) ? 'white' : 'black'
-                            }}>
-                            {variant.size || variant.color}
-                          </span>
-                        ))}
-                        {product.variants.length > 3 && (
-                          <span className="variant-more">+{product.variants.length - 3}</span>
-                        )}
-                      </div>
-                    </div>
-                  )}
                 </div>
               </div>
             </div>

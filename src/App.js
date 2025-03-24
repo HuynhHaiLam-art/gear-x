@@ -12,10 +12,10 @@ import LoginPage from "./pages/Auth/LoginPage.jsx";
 import RegisterPage from "./pages/Auth/RegisterPage.jsx";
 import CartPage from "./pages/CartPage/CartPage.jsx";
 import Home from './pages/HomePage/HomePage.jsx';
-//import TestApi from "./components/TestApi/TestApi.jsx";
 import ProductDetails from "./pages/ProductDetails/ProductDetails.jsx"; 
 import AdminPage from "./pages/AdminPage/AdminPage.jsx"; 
-import ProductService from "./pages/ProductPage/ProductService.jsx";
+
+import ProductDetailPage from "./pages/ProductDetails/ProductDetails.jsx"; // Thêm import
 
 // Ảnh sản phẩm
 import pd5 from "./assets/images/pd5.webp";
@@ -31,11 +31,8 @@ const sampleProducts = [
   { id: 4, name: "Túi xách nữ thời trang", image: pd8, oldPrice: 600000, newPrice: 450000, sold: 20, total: 50, category: "Nữ" },
 ];
 
-// Tài khoản giả để đăng nhập
-
 function App() {
   const [user, setUser] = useState(null);
-  
 
   return (
     <div>
@@ -46,12 +43,8 @@ function App() {
         <Route path="/" element={
           <>
             <MainBanner />
-            
-            
             <FlashSaleSlider products={sampleProducts} />
-            
             <Home />
-            
             <NewsSection />
           </>
         } />
@@ -61,9 +54,10 @@ function App() {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/cart" element={<CartPage />} />
 
-        {/* Trang sản phẩm */}
+        {/* Trang sản phẩm và chi tiết sản phẩm */}
         <Route path="/products/:category" element={<ProductPage products={sampleProducts} />} />
         <Route path="/product/:id" element={<ProductDetails products={sampleProducts} />} />
+        <Route path="/product-detail/:id" element={<ProductDetailPage />} /> {/* Thêm route mới */}
 
         {/* Trang Admin - chỉ cho phép admin vào */}
         <Route path="/admin" element={user?.role === "admin" ? <AdminPage /> : <Navigate to="/login" />} />
