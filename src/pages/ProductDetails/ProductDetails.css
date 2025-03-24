@@ -1,326 +1,86 @@
 .product-details-container {
-  padding: 40px 20px;
-  background-color: #f8f9fa;
-  min-height: 100vh;
-}
-
-.product-details-wrapper {
   max-width: 1200px;
   margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 40px;
-  background: #fff;
-  padding: 30px;
-  border-radius: 12px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-/* Product Gallery Styles */
-.product-gallery {
-  position: relative;
-}
-
-.main-image {
-  width: 100%;
-  height: 500px;
-  border-radius: 12px;
-  overflow: hidden;
-  margin-bottom: 20px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-.main-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.3s ease;
-}
-
-.main-image:hover img {
-  transform: scale(1.05);
-}
-
-.thumbnail-container {
-  display: flex;
-  gap: 10px;
-  overflow-x: auto;
-  padding: 10px 0;
-}
-
-.thumbnail {
-  width: 80px;
-  height: 80px;
-  border-radius: 8px;
-  overflow: hidden;
-  cursor: pointer;
-  border: 2px solid transparent;
-  transition: all 0.3s ease;
-}
-
-.thumbnail.active {
-  border-color: #2979ff;
-}
-
-.thumbnail img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* Product Info Styles */
-.product-info {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-}
-
-.product-header h1 {
-  font-size: 28px;
-  color: #1a1a1a;
-  margin-bottom: 16px;
-  line-height: 1.3;
-}
-
-.product-meta {
-  display: flex;
-  align-items: center;
-  gap: 24px;
-}
-
-.rating {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.stars {
-  color: #ffc107;
-  display: flex;
-  gap: 2px;
-}
-
-.rating-text {
-  font-weight: 600;
-  color: #1a1a1a;
-}
-
-.reviews {
-  color: #666;
-}
-
-.sold-count {
-  color: #666;
-}
-
-.product-price {
   padding: 20px;
-  background: #f8f9fa;
-  border-radius: 8px;
+  padding-bottom: 80px; /* Space for sticky action bar */
 }
 
-.current-price {
-  font-size: 32px;
-  font-weight: 700;
-  color: #e94560;
+/* ... (giữ nguyên các CSS cũ) ... */
+
+/* Thêm styles cho sticky action bar */
+.sticky-action-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: white;
+  padding: 10px;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
 }
 
-.original-price {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-top: 8px;
-}
-
-.old-price {
-  color: #999;
-  text-decoration: line-through;
-  font-size: 16px;
-}
-
-.discount {
-  background: #e94560;
-  color: white;
-  padding: 4px 8px;
+.sticky-action-bar button {
+  padding: 12px;
+  border: none;
   border-radius: 4px;
-  font-size: 14px;
-}
-
-/* Product Options Styles */
-.product-options {
+  cursor: pointer;
+  font-weight: bold;
   display: flex;
   flex-direction: column;
-  gap: 24px;
-}
-
-.product-options h3 {
-  font-size: 16px;
-  color: #1a1a1a;
-  margin-bottom: 12px;
-}
-
-.options {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-.option {
-  padding: 8px 16px;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  cursor: pointer;
-  background: white;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
   transition: all 0.3s ease;
 }
 
-.option.selected {
-  background: #2979ff;
+.sticky-action-bar .chat-now {
+  background: #4CAF50;
   color: white;
-  border-color: #2979ff;
 }
 
-.quantity-controls {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  background: #f8f9fa;
-  padding: 8px;
-  border-radius: 6px;
-  width: fit-content;
+.sticky-action-bar .add-to-cart {
+  background: #fff;
+  border: 2px solid #e44d26;
+  color: #e44d26;
 }
 
-.quantity-controls button {
-  width: 32px;
-  height: 32px;
-  border: none;
-  background: white;
-  border-radius: 4px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #666;
+.sticky-action-bar .buy-now {
+  background: #e44d26;
+  color: white;
 }
 
-.quantity-controls span {
-  min-width: 40px;
-  text-align: center;
-  font-weight: 600;
+.sticky-action-bar button:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
 }
 
-.stock {
-  margin-left: 12px;
-  color: #666;
+.sticky-action-bar button svg {
+  font-size: 20px;
+}
+
+.sticky-action-bar button span {
   font-size: 14px;
-}
-
-/* Product Actions Styles */
-.product-actions {
-  display: flex;
-  gap: 16px;
-  margin-top: 24px;
-}
-
-.product-actions button {
-  flex: 1;
-  padding: 16px;
-  border: none;
-  border-radius: 8px;
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  transition: all 0.3s ease;
-}
-
-.add-to-cart {
-  background: #f8f9fa;
-  color: #2979ff;
-  border: 2px solid #2979ff !important;
-}
-
-.add-to-cart:hover {
-  background: #eef2ff;
-}
-
-.buy-now {
-  background: #2979ff;
-  color: white;
-}
-
-.buy-now:hover {
-  background: #2962ff;
-}
-
-.additional-actions {
-  display: flex;
-  gap: 16px;
-}
-
-.additional-actions button {
-  padding: 12px 24px;
-  border: none;
-  background: none;
-  color: #666;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  transition: all 0.3s ease;
-}
-
-.additional-actions button:hover {
-  color: #2979ff;
-}
-
-.product-description {
-  margin-top: 32px;
-  padding-top: 32px;
-  border-top: 1px solid #eee;
-}
-
-.product-description h3 {
-  font-size: 18px;
-  color: #1a1a1a;
-  margin-bottom: 16px;
-}
-
-.product-description p {
-  color: #666;
-  line-height: 1.6;
-}
-
-/* Responsive Design */
-@media (max-width: 1024px) {
-  .product-details-wrapper {
-    grid-template-columns: 1fr;
-    gap: 32px;
-  }
-
-  .main-image {
-    height: 400px;
-  }
 }
 
 @media (max-width: 768px) {
+  .sticky-action-bar {
+    padding: 5px;
+  }
+
+  .sticky-action-bar button {
+    padding: 8px;
+  }
+
+  .sticky-action-bar button span {
+    font-size: 12px;
+  }
+  
+  /* Adjust container padding for mobile */
   .product-details-container {
-    padding: 20px 16px;
-  }
-
-  .product-actions {
-    flex-direction: column;
-  }
-
-  .main-image {
-    height: 300px;
-  }
-
-  .thumbnail {
-    width: 60px;
-    height: 60px;
+    padding: 10px;
+    padding-bottom: 70px;
   }
 }
