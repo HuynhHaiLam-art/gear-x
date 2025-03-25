@@ -4,6 +4,7 @@ import { FaShoppingCart, FaHeart, FaStar, FaShare, FaMinus, FaPlus, FaComments }
 import ProductService from '../ProductPage/ProductService';
 import CartSingleton from "../CartPage/CartSingleton";
 import "./ProductDetails.css";
+import CartService from '../CartPage/CartService';
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -36,6 +37,7 @@ const ProductDetails = () => {
       }
 
       const productData = productResponse.data;
+      console.log("productData", productData);
       setProduct(productData);
       setMainImage(productData.imageUrl || productData.image);
 
@@ -77,29 +79,40 @@ const ProductDetails = () => {
         alert('Vui lòng chọn size!');
         return;
       }
-
+  
       if (quantity <= 0) {
         alert('Vui lòng chọn số lượng hợp lệ!');
         return;
       }
+      console.log("loai");
+     console.log(product.variants[0].variantId);
+     console.log(product.productId);
+      console.log(quantity);
+      // Call the CartService API to add item to cart
+      const response = await CartService.addToCart(product.productId, quantity, product.variants[0].variantId);
+      console.log("response", response);
+      let cartItem = response.data;
+        console.log("cartItem", cartItem.items[0].cartItemId);
+      if (response.data) {
+           // Also update the CartSingleton for local state
+        CartSingleton.addItem({
+          id: cartItem.items[0].cartItemId,
+          name: product.name,
+          price: product.price,
+          image: mainImage || product.imageUrl || product.image,
+          size: selectedSize,
+          quantity: quantity,
+          sessionId: cartItem.sessionId
 
-      // Add to cart using CartSingleton
-      CartSingleton.addItem({
-        id: product.id,
-        name: product.name,
-        price: product.price,
-        image: mainImage || product.imageUrl || product.image,
-        size: selectedSize,
-        quantity: quantity
-      });
-
-      alert('Sản phẩm đã được thêm vào giỏ hàng!');
+        });
+  
+        alert('Sản phẩm đã được thêm vào giỏ hàng!');
+      }
     } catch (error) {
       console.error('Error adding to cart:', error);
       alert('Có lỗi xảy ra khi thêm vào giỏ hàng!');
     }
   };
-
   // Buy now handler
   const handleBuyNow = async () => {
     try {

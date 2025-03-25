@@ -3,12 +3,12 @@ import { useNavigate } from "react-router-dom";
 import "./CartPage.css";
 import CartSingleton from "./CartSingleton";
 import CartObserver from "./CartObserver.jsx";
-
+import CartService from '../CartPage/CartService';
 const CartPage = () => {
   const [items, setItems] = useState(CartSingleton.getItems());
   const [totalPrice, setTotalPrice] = useState(0);
   const navigate = useNavigate();
-
+ console.log("items", items);
   useEffect(() => {
     const updateCart = () => {
       const currentItems = CartSingleton.getItems();
@@ -28,6 +28,10 @@ const CartPage = () => {
   }, []);
 
   const handleRemoveItem = async (itemId) => {
+
+    console.log("itemId", itemId);
+    //const response = await CartService.removeFromCart(itemId);
+    
     // Xóa item khỏi state trước để UI cập nhật ngay lập tức
     setItems(prevItems => prevItems.filter(item => item.id !== itemId));
     
