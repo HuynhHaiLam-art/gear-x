@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { FaShoppingCart, FaHeart, FaStar, FaShare, FaMinus, FaPlus, FaComments } from 'react-icons/fa';
 import ProductService from '../ProductPage/ProductService';
+import CartSingleton from "../CartPage/CartSingleton";
 import "./ProductDetails.css";
 
 const ProductDetails = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [product, setProduct] = useState(null);
   const [variants, setVariants] = useState([]);
   const [reviews, setReviews] = useState([]);
@@ -18,8 +20,8 @@ const ProductDetails = () => {
   const [mainImage, setMainImage] = useState(null);
   const [productImages, setProductImages] = useState([]);
 
-  // Default sizes if no variants available
-  const defaultSizes = ['S', 'M', 'L', 'XL', 'XXL'];
+  // Define available sizes
+  const availableSizes = ['S', 'M', 'L', 'XL', 'XXL'];
 
   // Fetch all product data
   const fetchProductData = async (productId) => {
@@ -27,7 +29,6 @@ const ProductDetails = () => {
       setLoading(true);
       setError(null);
 
-      // Get main product data first
       const productResponse = await ProductService.getProduct(productId);
       
       if (!productResponse || !productResponse.data) {
@@ -38,7 +39,6 @@ const ProductDetails = () => {
       setProduct(productData);
       setMainImage(productData.imageUrl || productData.image);
 
-      // Then fetch additional data
       try {
         const [variantsRes, reviewsRes, imagesRes] = await Promise.all([
           ProductService.getProductVariants(productId),
@@ -50,30 +50,27 @@ const ProductDetails = () => {
         setReviews(reviewsRes?.data || []);
         setProductImages(imagesRes?.data || []);
 
-        // Fetch related products after we have the category
         if (productData.categoryId) {
           const relatedRes = await ProductService.getRelatedProducts(productData.categoryId);
           setRelatedProducts(relatedRes?.data || []);
         }
-
-        // Set default selected options if variants exist
-        if (variantsRes?.data?.length > 0) {
-          setSelectedSize(variantsRes.data[0].size || '');
-          setSelectedColor(variantsRes.data[0].color || '');
-        }
       } catch (error) {
-        console.warn('Error fetching additional product data:', error);
+        console.warn('Error fetching additional data:', error);
       }
-
     } catch (err) {
-      console.error('Error fetching product:', err);
       setError(err.message || 'Có lỗi xảy ra khi tải thông tin sản phẩm');
     } finally {
       setLoading(false);
     }
   };
 
-  // Add to cart handler with error handling
+  // Handle size selection
+  const handleSizeChange = (size) => {
+    console.log('Selected size:', size);
+    setSelectedSize(size);
+  };
+
+  // Add to cart handler
   const handleAddToCart = async () => {
     try {
       if (!selectedSize) {
@@ -86,11 +83,16 @@ const ProductDetails = () => {
         return;
       }
 
-      const selectedVariant = variants.find(
-        v => v.size === selectedSize && v.color === selectedColor
-      );
+      // Add to cart using CartSingleton
+      CartSingleton.addItem({
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        image: mainImage || product.imageUrl || product.image,
+        size: selectedSize,
+        quantity: quantity
+      });
 
-      await ProductService.addToCart(id, quantity, selectedVariant?.id);
       alert('Sản phẩm đã được thêm vào giỏ hàng!');
     } catch (error) {
       console.error('Error adding to cart:', error);
@@ -106,7 +108,7 @@ const ProductDetails = () => {
         return;
       }
       await handleAddToCart();
-      window.location.href = '/checkout';
+      navigate('/cart'); // Navigate to cart page
     } catch (error) {
       console.error('Error buying product:', error);
       alert('Có lỗi xảy ra khi mua hàng!');
@@ -118,7 +120,6 @@ const ProductDetails = () => {
     alert('Tính năng chat sẽ sớm ra mắt!');
   };
 
-  // Initialize data on component mount
   useEffect(() => {
     if (id) {
       fetchProductData(id);
@@ -207,42 +208,28 @@ const ProductDetails = () => {
           <div className="size-selector">
             <h3>Chọn Size</h3>
             <div className="size-options">
-              {defaultSizes.map(size => (
+              {availableSizes.map((size) => (
                 <button
                   key={size}
+                  type="button"
                   className={`size-option ${selectedSize === size ? 'selected' : ''}`}
-                  onClick={() => setSelectedSize(size)}
+                  onClick={() => handleSizeChange(size)}
                 >
                   {size}
                 </button>
               ))}
             </div>
+            {selectedSize && (
+              <p className="selected-size">Size đã chọn: {selectedSize}</p>
+            )}
           </div>
-
-          {/* Color Selector (if variants available) */}
-          {variants.length > 0 && (
-            <div className="color-selector">
-              <h3>Màu sắc</h3>
-              <div className="options">
-                {[...new Set(variants.map(v => v.color))].map(color => (
-                  <button
-                    key={color}
-                    className={`option ${selectedColor === color ? 'selected' : ''}`}
-                    onClick={() => setSelectedColor(color)}
-                  >
-                    {color}
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
 
           {/* Quantity Selector */}
           <div className="quantity-selector">
             <h3>Số lượng</h3>
             <div className="quantity-controls">
               <button 
-                onClick={() => setQuantity(prev => (prev > 1 ? prev - 1 : 1))}
+                onClick={() => setQuantity(prev => Math.max(1, prev - 1))}
                 disabled={quantity <= 1}
               >
                 <FaMinus />
@@ -265,29 +252,6 @@ const ProductDetails = () => {
             <h3>Mô tả sản phẩm</h3>
             <div dangerouslySetInnerHTML={{ __html: product.description }} />
           </div>
-
-          {/* Related Products */}
-          {relatedProducts.length > 0 && (
-            <div className="related-products">
-              <h3>Sản phẩm liên quan</h3>
-              <div className="related-products-grid">
-                {relatedProducts.map(relatedProduct => (
-                  <Link 
-                    to={`/product/${relatedProduct.id}`} 
-                    key={relatedProduct.id} 
-                    className="related-product-card"
-                  >
-                    <img 
-                      src={relatedProduct.imageUrl || relatedProduct.image} 
-                      alt={relatedProduct.name} 
-                    />
-                    <h4>{relatedProduct.name}</h4>
-                    <p>{Number(relatedProduct.price || relatedProduct.newPrice).toLocaleString()}đ</p>
-                  </Link>
-                ))}
-              </div>
-            </div>
-          )}
         </div>
       </div>
 
@@ -297,11 +261,19 @@ const ProductDetails = () => {
           <FaComments />
           <span>Chat ngay</span>
         </button>
-        <button className="add-to-cart" onClick={handleAddToCart}>
+        <button 
+          className={`add-to-cart ${!selectedSize ? 'disabled' : ''}`}
+          onClick={handleAddToCart}
+          disabled={!selectedSize}
+        >
           <FaShoppingCart />
           <span>Thêm vào giỏ</span>
         </button>
-        <button className="buy-now" onClick={handleBuyNow}>
+        <button 
+          className={`buy-now ${!selectedSize ? 'disabled' : ''}`}
+          onClick={handleBuyNow}
+          disabled={!selectedSize}
+        >
           <span>Mua ngay</span>
         </button>
       </div>

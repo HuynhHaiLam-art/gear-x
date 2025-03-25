@@ -14,6 +14,8 @@ import CartPage from "./pages/CartPage/CartPage.jsx";
 import Home from './pages/HomePage/HomePage.jsx';
 import ProductDetails from "./pages/ProductDetails/ProductDetails.jsx"; 
 import AdminPage from "./pages/AdminPage/AdminPage.jsx"; 
+import CheckoutPage from "./pages/CheckoutPage/CheckoutPage.jsx";
+import CheckoutSuccess from "./pages/CheckoutPage/CheckoutSuccess.jsx";
 
 import ProductDetailPage from "./pages/ProductDetails/ProductDetails.jsx"; // Thêm import
 
@@ -54,10 +56,14 @@ function App() {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/cart" element={<CartPage />} />
 
+        {/* Trang thanh toán */}
+        <Route path="/checkout" element={<CheckoutPage />} />
+        <Route path="/checkout/success" element={<CheckoutSuccess />} />
+
         {/* Trang sản phẩm và chi tiết sản phẩm */}
         <Route path="/products/:category" element={<ProductPage products={sampleProducts} />} />
         <Route path="/product/:id" element={<ProductDetails products={sampleProducts} />} />
-        <Route path="/product-detail/:id" element={<ProductDetailPage />} /> {/* Thêm route mới */}
+        <Route path="/product-detail/:id" element={<ProductDetailPage />} />
 
         {/* Trang Admin - chỉ cho phép admin vào */}
         <Route path="/admin" element={user?.role === "admin" ? <AdminPage /> : <Navigate to="/login" />} />

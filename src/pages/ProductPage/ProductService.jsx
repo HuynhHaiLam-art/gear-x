@@ -51,11 +51,7 @@ class ProductService {
     static getRelatedProducts(categoryId) {
         return axios({
             method: 'GET',
-            url: `${API_URL}/Products/all`,  // Sửa endpoint này
-            params: {
-                category: categoryId,
-                limit: 4
-            }
+            url: `${API_URL}/Products/category/${categoryId}`,  // Sửa endpoint này
         });
     }
 
