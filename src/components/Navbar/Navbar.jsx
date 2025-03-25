@@ -3,15 +3,13 @@ import { Link } from "react-router-dom";
 import "./Navbar.css";
 
 const menuItems = [
-  { name: "Nam", path: "/products/Nam" },
-  { name: "Nữ", path: "/products/Nữ" },
-  { name: "Trẻ em", path: "/products/Trẻ em" },
-  { name: "Phụ kiện", path: "/products/Phụ kiện" },
-  { name: "Giày dép", path: "/products/Giày dép" },
-  { name: "Bộ sưu tập", path: "/products/Bộ sưu tập" },
-  { name: "Sale", path: "/products/Sale" },
-  { name: "Xu hướng", path: "/products/Xu hướng" },
   { name: "Tất cả sản phẩm", path: "/products/all" },
+  { name: "Nam", path: "/products/1" },
+  { name: "Nữ", path: "/products/2" },
+  { name: "Trẻ em", path: "/products/3" },
+  { name: "Sale", path: "/products/4" },
+  { name: "Xu hướng", path: "/products/5" },
+  { name: "Bộ sưu tập", path: "/products/6" },
 ];
 
 const Navbar = () => {

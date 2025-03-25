@@ -4,7 +4,7 @@ import "./ProductPage.css";
 import ProductService from './ProductService';
 import { FiShoppingCart, FiHeart, FiSearch, FiFilter } from 'react-icons/fi';
 
-const ProductPage = () => {
+const ProductPage = ({sampleProducts}) => {
   const { category } = useParams();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -16,8 +16,15 @@ const ProductPage = () => {
     const fetchProducts = async () => {
       try {
         setLoading(true);
-        const response = await ProductService.getAllProducts();
-        console.log("API Response:", response);
+        let response;
+      if (category === "all"  || category === "4" || category === "5" || category === "6") {
+        response = await ProductService.getAllProducts();
+      } else {
+        response = await ProductService.getRelatedProducts(category);
+      }
+        
+       
+        //console.log("API Response:", response);
         
         // Process the response data - handle both array and single object
         let productsData = [];
