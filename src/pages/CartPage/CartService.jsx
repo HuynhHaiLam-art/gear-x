@@ -7,6 +7,7 @@ axios.defaults.headers.common['Content-Type'] = 'application/json';
 axios.defaults.headers.common['Accept'] = 'application/json';
 
 class CartService {
+    c
     // Get cart items
     static getCartItems() {
         return axios({
@@ -20,6 +21,7 @@ class CartService {
         return axios({
             method: 'POST',
             url: `${API_URL}/ShoppingCart`,
+            withCredentials: true ,
             data: {
                 productId,
                 quantity,
@@ -33,6 +35,7 @@ class CartService {
         return axios({
             method: 'PUT',
             url: `${API_URL}/Cart/${cartItemId}`,
+            credentials: 'include',
             data: {
                 quantity
             }
@@ -40,13 +43,11 @@ class CartService {
     }
 
     // Remove item from cart
-    static removeFromCart(cartItemId, sessionId) {
+    static removeFromCart(cartItemId) {
         return axios({
             method: 'DELETE',
             url: `${API_URL}/ShoppingCart/items/${cartItemId}`,
-            headers: {
-                'Session-Id': sessionId
-            }
+            withCredentials: true ,
         });
     }
 

@@ -16,13 +16,13 @@ const ProductDetails = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedSize, setSelectedSize] = useState('');
-  const [selectedColor, setSelectedColor] = useState('');
   const [quantity, setQuantity] = useState(1);
   const [mainImage, setMainImage] = useState(null);
   const [productImages, setProductImages] = useState([]);
 
-  // Define available sizes
-  const availableSizes = ['S', 'M', 'L', 'XL', 'XXL'];
+  const [availableSizes, setAvailableSizes] = useState([]);
+  const [availableColors, setAvailableColors] = useState([]);
+
 
   // Fetch all product data
   const fetchProductData = async (productId) => {
@@ -31,7 +31,9 @@ const ProductDetails = () => {
       setError(null);
 
       const productResponse = await ProductService.getProduct(productId);
+      console.log("productResponse", productResponse);
       
+
       if (!productResponse || !productResponse.data) {
         throw new Error('Không thể tải thông tin sản phẩm');
       }
@@ -40,22 +42,39 @@ const ProductDetails = () => {
       console.log("productData", productData);
       setProduct(productData);
       setMainImage(productData.imageUrl || productData.image);
+      // Extract unique sizes and colors from variants
+      if (productData.variants && productData.variants.length > 0) {
+        // Use Set to automatically remove duplicates
+        const sizeSet = new Set(productData.variants.map(variant => variant.size));
+        const colorSet = new Set(productData.variants.map(variant => variant.color));
 
-      try {
-        const [variantsRes, reviewsRes, imagesRes] = await Promise.all([
-          ProductService.getProductVariants(productId),
-          ProductService.getProductReviews(productId),
-          ProductService.getProductImages(productId)
-        ]);
+        // Convert back to arrays
+        setAvailableSizes([...sizeSet]);
+        setAvailableColors([...colorSet]);
 
-        setVariants(variantsRes?.data || []);
-        setReviews(reviewsRes?.data || []);
-        setProductImages(imagesRes?.data || []);
-
-        if (productData.categoryId) {
-          const relatedRes = await ProductService.getRelatedProducts(productData.categoryId);
-          setRelatedProducts(relatedRes?.data || []);
+        // Set initial selected values if available
+        if (sizeSet.size > 0) {
+          setSelectedSize([...sizeSet][0]);
         }
+        // if (colorSet.size > 0) {
+        //   setSelectedColor([...colorSet][0]);
+        // }
+      }
+      try {
+        // const [variantsRes, reviewsRes, imagesRes] = await Promise.all([
+        //   ProductService.getProductVariants(productId),
+        //   ProductService.getProductReviews(productId),
+        //   ProductService.getProductImages(productId)
+        // ]);
+
+        // setVariants(variantsRes?.data || []);
+        // setReviews(reviewsRes?.data || []);
+        // setProductImages(imagesRes?.data || []);
+
+        // if (productData.categoryId) {
+        //   const relatedRes = await ProductService.getRelatedProducts(productData.categoryId);
+        //   setRelatedProducts(relatedRes?.data || []);
+        // }
       } catch (error) {
         console.warn('Error fetching additional data:', error);
       }
@@ -79,33 +98,32 @@ const ProductDetails = () => {
         alert('Vui lòng chọn size!');
         return;
       }
-  
+
       if (quantity <= 0) {
         alert('Vui lòng chọn số lượng hợp lệ!');
         return;
       }
-      console.log("loai");
-     console.log(product.variants[0].variantId);
-     console.log(product.productId);
-      console.log(quantity);
+      
       // Call the CartService API to add item to cart
       const response = await CartService.addToCart(product.productId, quantity, product.variants[0].variantId);
-      console.log("response", response);
+      
       let cartItem = response.data;
-        console.log("cartItem", cartItem.items[0].cartItemId);
+      
       if (response.data) {
-           // Also update the CartSingleton for local state
+        // Also update the CartSingleton for local state
         CartSingleton.addItem({
-          id: cartItem.items[0].cartItemId,
+          cartItemId: cartItem.items[0].cartItemId,
+          id: product.productId,
           name: product.name,
           price: product.price,
           image: mainImage || product.imageUrl || product.image,
           size: selectedSize,
           quantity: quantity,
-          sessionId: cartItem.sessionId
 
         });
-  
+         console.log("cartItem", cartItem.sessionId);
+        //CartSingleton.setSessionId(cartItem.sessionId);
+
         alert('Sản phẩm đã được thêm vào giỏ hàng!');
       }
     } catch (error) {
@@ -169,8 +187,8 @@ const ProductDetails = () => {
           {productImages.length > 0 && (
             <div className="thumbnail-container">
               {productImages.map((img, index) => (
-                <div 
-                  key={index} 
+                <div
+                  key={index}
                   className={`thumbnail ${mainImage === img.url ? 'active' : ''}`}
                   onClick={() => setMainImage(img.url)}
                 >
@@ -189,7 +207,7 @@ const ProductDetails = () => {
               <div className="rating">
                 <span className="stars">
                   {[...Array(5)].map((_, index) => (
-                    <FaStar 
+                    <FaStar
                       key={index}
                       className={index < Math.floor(product.rating || 0) ? 'filled' : 'empty'}
                     />
@@ -211,7 +229,7 @@ const ProductDetails = () => {
                   {Number(product.oldPrice || product.originalPrice).toLocaleString()}đ
                 </span>
                 <span className="discount">
-                  -{Math.round((1 - (product.price || product.newPrice)/(product.oldPrice || product.originalPrice)) * 100)}%
+                  -{Math.round((1 - (product.price || product.newPrice) / (product.oldPrice || product.originalPrice)) * 100)}%
                 </span>
               </div>
             )}
@@ -236,19 +254,38 @@ const ProductDetails = () => {
               <p className="selected-size">Size đã chọn: {selectedSize}</p>
             )}
           </div>
+{/* color Selector */}
+{/* <div className="size-selector">
+            <h3>Chọn Màu</h3>
+            <div className="size-options">
+              {availableColors.map((size) => (
+                <button
+                  key={size}
+                  type="button"
+                  className={`size-option ${selectedSize === size ? 'selected' : ''}`}
+                  onClick={() => handleSizeChange(size)}
+                >
+                  {size}
+                </button>
+              ))}
+            </div>
+            {selectedSize && (
+              <p className="selected-size">Size đã chọn: {selectedSize}</p>
+            )}
+          </div> */}
 
           {/* Quantity Selector */}
           <div className="quantity-selector">
             <h3>Số lượng</h3>
             <div className="quantity-controls">
-              <button 
+              <button
                 onClick={() => setQuantity(prev => Math.max(1, prev - 1))}
                 disabled={quantity <= 1}
               >
                 <FaMinus />
               </button>
               <span>{quantity}</span>
-              <button 
+              <button
                 onClick={() => setQuantity(prev => prev + 1)}
                 disabled={quantity >= (product.stockQuantity || 99)}
               >
@@ -274,7 +311,7 @@ const ProductDetails = () => {
           <FaComments />
           <span>Chat ngay</span>
         </button>
-        <button 
+        <button
           className={`add-to-cart ${!selectedSize ? 'disabled' : ''}`}
           onClick={handleAddToCart}
           disabled={!selectedSize}
@@ -282,7 +319,7 @@ const ProductDetails = () => {
           <FaShoppingCart />
           <span>Thêm vào giỏ</span>
         </button>
-        <button 
+        <button
           className={`buy-now ${!selectedSize ? 'disabled' : ''}`}
           onClick={handleBuyNow}
           disabled={!selectedSize}

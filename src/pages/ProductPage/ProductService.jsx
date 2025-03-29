@@ -11,7 +11,8 @@ class ProductService {
     static getAllProducts() {
         return axios({
             method: 'GET',
-            url: `${API_URL}/Products/all`,  // Sửa endpoint này
+            url: `${API_URL}/Products/all`,
+             // Sửa endpoint này
         });
     }
 

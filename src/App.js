@@ -12,10 +12,13 @@ import LoginPage from "./pages/Auth/LoginPage.jsx";
 import RegisterPage from "./pages/Auth/RegisterPage.jsx";
 import CartPage from "./pages/CartPage/CartPage.jsx";
 import Home from './pages/HomePage/HomePage.jsx';
-import ProductDetails from "./pages/ProductDetails/ProductDetails.jsx"; 
-import AdminPage from "./pages/AdminPage/AdminPage.jsx"; 
+import ProductDetails from "./pages/ProductDetails/ProductDetails.jsx";
+import AdminPage from "./pages/AdminPage/AdminPage.jsx";
 import CheckoutPage from "./pages/CheckoutPage/CheckoutPage.jsx";
 import CheckoutSuccess from "./pages/CheckoutPage/CheckoutSuccess.jsx";
+import ProductManagement from "./pages/ProductManagement/ProductManagement.jsx";
+import UserManagement from "./pages/UserManagement/UserManagement.jsx";
+import OrderManagement from "./pages/OrderManagement/OrderManagement.jsx";
 
 import ProductDetailPage from "./pages/ProductDetails/ProductDetails.jsx"; // Thêm import
 
@@ -32,6 +35,8 @@ const sampleProducts = [
   { id: 3, name: "Giày sneaker trắng nam", image: pd7, oldPrice: 800000, newPrice: 650000, sold: 50, total: 120, category: "Nam" },
   { id: 4, name: "Túi xách nữ thời trang", image: pd8, oldPrice: 600000, newPrice: 450000, sold: 20, total: 50, category: "Nữ" },
 ];
+
+
 
 function App() {
   const [user, setUser] = useState(null);
@@ -66,9 +71,12 @@ function App() {
         <Route path="/product-detail/:id" element={<ProductDetailPage />} />
 
         {/* Trang Admin - chỉ cho phép admin vào */}
-        <Route path="/admin" element={user?.role === "admin" ? <AdminPage /> : <Navigate to="/login" />} />
+        <Route path="/admin" element={user === "admin" ? <AdminPage /> : <Navigate to="/login" />} />
+        <Route path="/admin/products" element={<ProductManagement />} />
+        <Route path="/admin/users" element={<UserManagement />} />
+        <Route path="/admin/orders" element={<OrderManagement />} />
       </Routes>
-      
+
       <Footer />
     </div>
   );

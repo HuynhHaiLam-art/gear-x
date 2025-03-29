@@ -1,37 +1,76 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import "./Auth.css"; // Import file CSS mới
-
-// Danh sách tài khoản giả
-const fakeUsers = [
-  { email: "admin@example.com", password: "admin123", role: "admin" },
-  { email: "user@example.com", password: "user123", role: "user" },
-];
+import { useNavigate, Link } from "react-router-dom";
+import UserService from "./UserService";
+import "./Auth.css";
+import { FiMail, FiLock, FiUser, FiPhone, FiLoader } from "react-icons/fi";
 
 const AuthFactory = ({ type, setUser }) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  // Form states
+  const [formData, setFormData] = useState({
+    fullName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    phone: ""
+  });
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
+    setLoading(true);
 
-    if (type === "login") {
-      const foundUser = fakeUsers.find(
-        (user) => user.email === email && user.password === password
-      );
-
-      if (foundUser) {
-        setUser(foundUser);
-        if (foundUser.role === "admin") {
+    try {
+      if (type === "login") {
+        // API login call
+        const credentials = {
+          email: formData.email,
+          password: formData.password
+        };
+        
+        const response = await UserService.login(credentials);
+        console.log("Login response:", response);
+        // Set user data and redirect based on role
+        setUser(response.role);
+        console.log("User role:", response.role);
+        if (response.role === "admin") {
           navigate("/admin");
         } else {
           navigate("/");
         }
       } else {
-        setError("Sai email hoặc mật khẩu!");
+        // Registration validation
+        if (formData.password !== formData.confirmPassword) {
+          throw new Error("Mật khẩu xác nhận không khớp!");
+        }
+        
+        // API register call
+        const userData = {
+          fullName: formData.fullName,
+          email: formData.email,
+          password: formData.password,
+          confirmPassword: formData.confirmPassword,
+          phone: formData.phone
+        };
+        
+        await UserService.register(userData);
+        // Show success message and redirect to login
+        alert("Đăng ký thành công! Vui lòng đăng nhập.");
+        navigate("/login");
       }
+    } catch (err) {
+      setError(err.message || "Đã xảy ra lỗi. Vui lòng thử lại.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -40,33 +79,98 @@ const AuthFactory = ({ type, setUser }) => {
       <div className="auth-box">
         <h2>{type === "login" ? "Đăng nhập" : "Đăng ký"}</h2>
         <form onSubmit={handleSubmit}>
-          {type === "register" && <input type="text" placeholder="Họ và Tên" />}
-          <input 
-            type="email" 
-            placeholder="Email" 
-            value={email} 
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <input 
-            type="password" 
-            placeholder="Mật khẩu" 
-            value={password} 
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          {type === "register" && <input type="password" placeholder="Xác nhận mật khẩu" />}
-          {error && <p style={{ color: "red" }}>{error}</p>}
-          <button className="auth-button" type="submit">
-            {type === "login" ? "Đăng nhập" : "Đăng ký"}
+          {type === "register" && (
+            <div className="input-group">
+              <FiUser className="input-icon" />
+              <input 
+                type="text" 
+                name="fullName"
+                placeholder="Họ và Tên" 
+                value={formData.fullName}
+                onChange={handleChange}
+                required
+              />
+            </div>
+          )}
+          
+          <div className="input-group">
+            <FiMail className="input-icon" />
+            <input 
+              type="email" 
+              name="email"
+              placeholder="Email" 
+              value={formData.email} 
+              onChange={handleChange}
+              required
+            />
+          </div>
+          
+          <div className="input-group">
+            <FiLock className="input-icon" />
+            <input 
+              type="password" 
+              name="password"
+              placeholder="Mật khẩu" 
+              value={formData.password} 
+              onChange={handleChange}
+              required
+            />
+          </div>
+          
+          {type === "register" && (
+            <>
+              <div className="input-group">
+                <FiLock className="input-icon" />
+                <input 
+                  type="password" 
+                  name="confirmPassword"
+                  placeholder="Xác nhận mật khẩu" 
+                  value={formData.confirmPassword}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              
+              <div className="input-group">
+                <FiPhone className="input-icon" />
+                <input 
+                  type="tel" 
+                  name="phone"
+                  placeholder="Số điện thoại" 
+                  value={formData.phone}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+            </>
+          )}
+          
+          {error && <p className="error-message">{error}</p>}
+          
+          <button 
+            className={`auth-button ${loading ? 'loading' : ''}`} 
+            type="submit"
+            disabled={loading}
+          >
+            {loading ? (
+              <>
+                <FiLoader className="spinner" />
+                {type === "login" ? "Đang đăng nhập..." : "Đang đăng ký..."}
+              </>
+            ) : (
+              type === "login" ? "Đăng nhập" : "Đăng ký"
+            )}
           </button>
         </form>
-        <p>
+        
+        <p className="auth-redirect">
           {type === "login" ? (
             <>
-              Chưa có tài khoản? <a href="/register">Đăng ký ngay</a>
+              Chưa có tài khoản? <Link to="/register">Đăng ký ngay</Link>
             </>
           ) : (
             <>
-              Đã có tài khoản? <a href="/login">Đăng nhập</a>
+              Đã có tài khoản? <Link to="/login">Đăng nhập</Link>
             </>
           )}
         </p>
