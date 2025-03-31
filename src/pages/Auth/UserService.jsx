@@ -18,8 +18,7 @@ class UserService {
         const response = await fetch(`${this.userEndpoint}/Profile`, {
           method: 'GET',
           headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${this.getToken()}`
+            'Content-Type': 'application/json',         
           },
           credentials: 'include'
         });
@@ -59,15 +58,40 @@ class UserService {
         }
   
         const data = await response.json();
-       
+        
         this.saveToken(data);
+        const a = localStorage.getItem('authToken');
+        console.log("Token:", a);
         return data;
       } catch (error) {
         console.error('Login error:', error);
         throw error;
       }
     }
+     
+    async getProfileByEmail(email) {
+      try {
+        const response = await fetch(`${this.userEndpoint}/ProfileByEmail/${email}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',         
+          },
+          credentials: 'include'
+        });
   
+        if (!response.ok) {
+          throw new Error('Google login failed. Please check your credentials.');
+        }
+  
+        const data = await response.json();
+        
+        this.saveToken(data);
+        return data;
+      } catch (error) {
+        console.error('Google login error:', error);
+        throw error;
+      }
+    }
     /**
      * Register a new user
      * @param {Object} userData - The registration data
@@ -171,8 +195,8 @@ class UserService {
      * @param {Object} data - Authentication data
      */
     saveToken(data) {
-      if (data && data.token) {
-        localStorage.setItem('authToken', data.token);
+      if (data && data.authToken) {
+        localStorage.setItem('authToken', data.authToken);
         localStorage.setItem('user', JSON.stringify(data.user));
       }
     }

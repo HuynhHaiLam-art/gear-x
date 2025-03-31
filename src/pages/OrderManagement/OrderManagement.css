@@ -1,178 +1,63 @@
 .order-management-container {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  padding: 30px;
-  background: linear-gradient(to bottom, #f5f7fa, #c3cfe2);
-  min-height: 100vh;
-}
-
-.order-management-header {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 40px;
-  padding-bottom: 15px;
-  border-bottom: 2px solid #a1c4fd;
-  background-color: rgba(255, 255, 255, 0.8);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  border-radius: 8px;
-}
-
-.order-management-header h1 {
-  font-size: 32px;
-  color: #2c3e50;
-  margin: 0;
-  padding: 10px 20px;
+  padding: 20px;
 }
 
 .order-table {
   width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
-  margin-top: 20px;
-  background-color: #ffffff;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
-  overflow: hidden;
+  border-collapse: collapse;
 }
 
 .order-table th,
 .order-table td {
-  padding: 14px 20px;
+  border: 1px solid #ddd;
+  padding: 8px;
   text-align: left;
 }
 
 .order-table th {
-  background-color: #34495e;
-  color: #ecf0f1;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+  background-color: #f2f2f2;
 }
 
-.order-table tbody tr:nth-child(even) {
-  background-color: #f9f9f9;
-}
-
-.order-table tbody tr:hover {
-  background-color: #ecf0f1;
-  transition: background-color 0.3s ease;
-}
-
-.order-table td button {
-  padding: 10px 16px;
+.order-table button {
+  padding: 5px 10px;
+  margin-right: 5px;
   border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: 600;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-  background-color: #2980b9;
-  color: #fff;
-}
-
-.order-table td button:hover {
-  background-color: #1c5980;
-  transform: scale(1.03);
-}
-
-.view-order-details {
-  background-color: #ffffff;
-  padding: 25px;
-  border-radius: 10px;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
-  max-width: 500px;
-  margin: 0 auto;
-}
-
-.view-order-details h2 {
-  font-size: 28px;
-  margin-bottom: 20px;
-  color: #2c3e50;
-  text-align: center;
-}
-
-.view-order-details p {
-  font-size: 18px;
-  margin-bottom: 12px;
-  color: #555;
-}
-
-.view-order-details button {
-  display: block;
-  margin: 20px auto 0;
-  padding: 12px 24px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  background-color: #7f8c8d;
-  color: #fff;
-  font-weight: 600;
-  transition: background-color 0.3s ease;
-}
-
-.view-order-details button:hover {
-  background-color: #626567;
-}
-
-/* New badge styles */
-.status-badge {
-  display: inline-block;
-  padding: 4px 8px;
-  border-radius: 12px;
-  font-size: 14px;
-  margin-left: 8px;
-  color: #fff;
-}
-.process-badge {
-  background-color: #27ae60;
-}
-.ship-badge {
-  background-color: #2980b9;
-}
-.deliver-badge {
-  background-color: #8e44ad;
-}
-.cancel-badge {
-  background-color: #e74c3c;
-}
-.refund-badge {
-  background-color: #f39c12;
-}
-.not-badge {
-  background-color: #95a5a6;
-}
-
-/* Order progress bar styles */
-.order-progress {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin: 20px auto;
-  max-width: 600px;
-}
-.progress-step {
-  flex: 0 0 80px;
-  height: 80px;
-  line-height: 80px;
-  border-radius: 50%;
-  background-color: #e0e0e0;
-  color: #7f8c8d;
-  text-align: center;
-  font-weight: bold;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-}
-.progress-step.active {
-  background-color: #27ae60;
-  color: #fff;
-  transform: scale(1.1);
-}
-.progress-line {
-  flex: 1;
-  height: 6px;
-  background-color: #e0e0e0;
-  margin: 0 10px;
   border-radius: 3px;
-  transition: background-color 0.3s ease;
+  cursor: pointer;
 }
-.progress-line.active {
-  background-color: #27ae60;
+
+.order-table button:hover {
+  opacity: 0.8;
+}
+
+.order-table button:first-child {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.order-table button:last-child {
+  background-color: #008CBA;
+  color: white;
+}
+
+.order-management-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.order-management-header h2 {
+  font-size: 28px;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+}
+
+.order-controls {
+  display: flex;
+  gap: 15px;
+  align-items: center;
 }

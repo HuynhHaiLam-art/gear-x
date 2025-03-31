@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useParams, Link, useNavigate } from "react-router-dom";
-import { FaShoppingCart, FaHeart, FaStar, FaShare, FaMinus, FaPlus, FaComments } from 'react-icons/fa';
+import { useParams, useNavigate } from "react-router-dom";
+import { FaShoppingCart, FaStar, FaMinus, FaPlus, FaComments } from 'react-icons/fa';
 import ProductService from '../ProductPage/ProductService';
 import CartSingleton from "../CartPage/CartSingleton";
 import "./ProductDetails.css";
@@ -10,9 +10,7 @@ const ProductDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [product, setProduct] = useState(null);
-  const [variants, setVariants] = useState([]);
   const [reviews, setReviews] = useState([]);
-  const [relatedProducts, setRelatedProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedSize, setSelectedSize] = useState('');

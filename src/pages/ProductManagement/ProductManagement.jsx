@@ -1,16 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
-  FiUsers,
-  FiPackage,
-  FiShoppingCart,
-  FiBarChart2,
-  FiSettings,
-  FiMenu,
+  
   FiEdit,
   FiTrash2,
   FiEye,
-  FiPlus
+  FiPlus,
+  FiSearch
 } from "react-icons/fi";
 import "./ProductManagement.css";
 import "../AdminPage/AdminPage.css";
@@ -35,6 +31,7 @@ const ProductManagement = () => {
     show: false,
     productId: null,
   });
+  const [searchQuery, setSearchQuery] = useState("");
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [error, setError] = useState(null);
 
@@ -270,17 +267,23 @@ const ProductManagement = () => {
       <div className="admin-content">
         <header className="admin-header">
           <div className="header-left">
-           
             <h1>Product Management</h1>
-            <button onClick={handleAddProduct} disabled={isAdding || loading}>
-              <FiPlus className="button-icon" />
-              {isAdding ? "Adding..." : "Add Product"}
-            </button>
           </div>
           <div className="header-right">
-            <div className="admin-profile">
-              <img src="https://traicho.com/wp-content/uploads/2024/07/cat-anh-long-ngan-1-3.v" alt="Admin" />
-              <span>Admin User</span>
+            <div className="user-controls">
+              <div className="search-container">
+                <FiSearch className="search-icon" />
+                <input
+                  type="text"
+                  placeholder="Search products..."
+                  className="search-input"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                />
+              </div>
+              <button onClick={handleAddProduct} disabled={isAdding || loading} className="action-btn add-user-btn">
+                {isAdding ? "Adding..." : <><FiPlus /> Add Product</>}
+              </button>
             </div>
           </div>
         </header>

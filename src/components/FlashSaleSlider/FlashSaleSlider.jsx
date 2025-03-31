@@ -17,6 +17,9 @@ const FlashSaleSlider = () => {
     const fetchProducts = async () => {
       try {
         const response = await axios.get("http://localhost:5000/api/Products/all", {
+          params: {
+            limit: 8  // Thêm tham số limit
+          },
           headers: {
             "Accept": "application/json",
             "Content-Type": "application/json",

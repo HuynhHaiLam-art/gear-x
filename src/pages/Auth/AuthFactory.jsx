@@ -38,10 +38,11 @@ const AuthFactory = ({ type, setUser }) => {
         };
         
         const response = await UserService.login(credentials);
-        console.log("Login response:", response);
+       
         // Set user data and redirect based on role
         setUser(response.role);
         console.log("User role:", response.role);
+        window.dispatchEvent(new Event("userLoggedIn"));
         if (response.role === "admin") {
           navigate("/admin");
         } else {

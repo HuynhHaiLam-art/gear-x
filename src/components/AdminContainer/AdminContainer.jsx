@@ -3,13 +3,13 @@ import { Link } from "react-router-dom";
 import {
   FiUsers,
   FiPackage,
-  FiShoppingCart,
   FiBarChart2,
   FiSettings,
   FiMenu,
   FiDollarSign,
   FiUserCheck,
   FiTrendingUp,
+  FiShoppingCart,
 } from "react-icons/fi";
 import "./AdminContainer.css";
 
@@ -32,7 +32,7 @@ const AdminContainer = ({ children }) => {
         <nav className="sidebar-nav">
           <ul>
             <li>
-              <Link to="/admin/dashboard" className="active">
+              <Link to="/admin" className="active">
                 <FiBarChart2 className="nav-icon" />
                 <span className="nav-text">Dashboard</span>
               </Link>
@@ -56,9 +56,9 @@ const AdminContainer = ({ children }) => {
               </Link>
             </li>
             <li>
-              <Link to="/admin/reports">
+              <Link to="/admin/categories">
                 <FiTrendingUp className="nav-icon" />
-                <span className="nav-text">Reports</span>
+                <span className="nav-text">Categories</span>
               </Link>
             </li>
             <li>

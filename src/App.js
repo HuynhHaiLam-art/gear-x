@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { Routes, Route, useNavigate, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Header from './components/Header/Header.jsx';
 import Navbar from "./components/Navbar/Navbar.jsx";
 import MainBanner from "./components/MainBanner/MainBanner.jsx";
-
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import FlashSaleSlider from "./components/FlashSaleSlider/FlashSaleSlider.jsx";
 import NewsSection from "./components/News/NewsSection.jsx";
 import Footer from "./components/Footer/Footer.jsx";
@@ -19,9 +20,9 @@ import CheckoutSuccess from "./pages/CheckoutPage/CheckoutSuccess.jsx";
 import ProductManagement from "./pages/ProductManagement/ProductManagement.jsx";
 import UserManagement from "./pages/UserManagement/UserManagement.jsx";
 import OrderManagement from "./pages/OrderManagement/OrderManagement.jsx";
-
+import OrderDetail from "./pages/OrderDetail/OrderDetail";
 import ProductDetailPage from "./pages/ProductDetails/ProductDetails.jsx"; // Thêm import
-
+import CategoryManagement from "./pages/CategoryManagement/CategoryManagement";
 // Ảnh sản phẩm
 import pd5 from "./assets/images/pd5.webp";
 import pd6 from "./assets/images/pd6.webp";
@@ -75,6 +76,8 @@ function App() {
         <Route path="/admin/products" element={<ProductManagement />} />
         <Route path="/admin/users" element={<UserManagement />} />
         <Route path="/admin/orders" element={<OrderManagement />} />
+        <Route path="/admin/orders/:id" element={<OrderDetail />} /> 
+        <Route path="/admin/categories" element={<CategoryManagement />} />
       </Routes>
 
       <Footer />
