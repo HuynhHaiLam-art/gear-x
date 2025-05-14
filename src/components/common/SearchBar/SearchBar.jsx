@@ -3,12 +3,12 @@ import { FiSearch } from "react-icons/fi";
 import './SearchBar.css';
 
 const SearchBar = ({ placeholder, onSearch }) => {
-  const [searchValue, setSearchValue] = useState('');
+  const [searchValue, setSearchValue] = useState("");
 
-  const handleInputChange = (e) => {
-    const value = e.target.value;
+  const handleInputChange = (event) => {
+    const value = event.target.value;
     setSearchValue(value);
-    onSearch(value); // Gọi callback ngay khi người dùng nhập
+    onSearch(value);
   };
 
   return (

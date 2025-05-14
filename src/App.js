@@ -1,13 +1,19 @@
 import React, { useState } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
-import Header from './components/Header/Header.jsx';
-import Navbar from "./components/Navbar/Navbar.jsx";
-import MainBanner from "./components/MainBanner/MainBanner.jsx";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import FlashSaleSlider from "./components/FlashSaleSlider/FlashSaleSlider.jsx";
-import NewsSection from "./components/News/NewsSection.jsx";
-import Footer from "./components/Footer/Footer.jsx";
+
+// Layout Components
+import Header from './components/layout/Header/Header.jsx';
+import Navbar from "./components/layout/Navbar/Navbar.jsx";
+import Footer from "./components/layout/Footer/Footer.jsx";
+
+// Feature Components
+import MainBanner from "./components/features/MainBanner/MainBanner.jsx";
+import FlashSaleSlider from "./components/features/FlashSaleSlider/FlashSaleSlider.jsx";
+import NewsSection from "./components/features/News/NewsSection.jsx";
+
+// Pages
 import ProductPage from "./pages/ProductPage/ProductPage.jsx";
 import LoginPage from "./pages/Auth/LoginPage.jsx";
 import RegisterPage from "./pages/Auth/RegisterPage.jsx";
@@ -21,9 +27,9 @@ import ProductManagement from "./pages/ProductManagement/ProductManagement.jsx";
 import UserManagement from "./pages/UserManagement/UserManagement.jsx";
 import OrderManagement from "./pages/OrderManagement/OrderManagement.jsx";
 import OrderDetail from "./pages/OrderDetail/OrderDetail";
-import ProductDetailPage from "./pages/ProductDetails/ProductDetails.jsx"; // Thêm import
 import CategoryManagement from "./pages/CategoryManagement/CategoryManagement";
-// Ảnh sản phẩm
+
+// Assets
 import pd5 from "./assets/images/pd5.webp";
 import pd6 from "./assets/images/pd6.webp";
 import pd7 from "./assets/images/pd7.webp";
@@ -36,8 +42,6 @@ const sampleProducts = [
   { id: 3, name: "Giày sneaker trắng nam", image: pd7, oldPrice: 800000, newPrice: 650000, sold: 50, total: 120, category: "Nam" },
   { id: 4, name: "Túi xách nữ thời trang", image: pd8, oldPrice: 600000, newPrice: 450000, sold: 20, total: 50, category: "Nữ" },
 ];
-
-
 
 function App() {
   const [user, setUser] = useState(null);

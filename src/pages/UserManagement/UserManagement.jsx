@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./UserManagement.css";
 import AdminContainer from "../../components/AdminContainer/AdminContainer.jsx";
 import { FiSearch, FiEdit, FiTrash2, FiEye, FiPlus } from "react-icons/fi";
-import UserService from "../../services/UserService.jsx";
+import UserAdminService from "./UserAdminService.jsx";
 import { toast } from 'react-toastify';
 
 const UserManagement = () => {
@@ -11,9 +11,11 @@ const UserManagement = () => {
   const [isAdding, setIsAdding] = useState(false);
   const [isEditing, setIsEditing] = useState(null);
   const [newUser, setNewUser] = useState({
-    userName: "",
+    fullName: "",
     email: "",
+    phone: "",
     role: "",
+    password: "",
   });
   const [deleteConfirmation, setDeleteConfirmation] = useState({
     show: false,
@@ -33,7 +35,7 @@ const UserManagement = () => {
   const fetchUsers = async () => {
     try {
       setLoading(true);
-      const data = await UserService.getAllUsers();
+      const data = await UserAdminService.getAllUsers();
       console.log("API users data:", data);
       setUsers(data);
     } catch (error) {
@@ -41,9 +43,9 @@ const UserManagement = () => {
       toast.error("Failed to load users");
       // Fallback to mock data if API fails
       const mockUsers = [
-        { id: 1, userName: "User 1", email: "user1@example.com", role: "Admin" },
-        { id: 2, userName: "User 2", email: "user2@example.com", role: "Editor" },
-        { id: 3, userName: "User 3", email: "user3@example.com", role: "Viewer" },
+        { userId: 1, fullName: "Thanh An", email: "user1@example.com", phone: "090123456789", role: "admin" },
+        { userId: 2, fullName: "User 2", email: "user2@example.com", phone: "090123456780", role: "editor" },
+        { userId: 3, fullName: "User 3", email: "user3@example.com", phone: "090123456781", role: "viewer" },
       ];
       setUsers(mockUsers);
     } finally {
@@ -58,23 +60,24 @@ const UserManagement = () => {
   const handleAddUser = () => {
     setIsAdding(true);
     setNewUser({
-      userName: "",
+      fullName: "",
       email: "",
+      phone: "",
       role: "",
-      password: "", // Add password field for new users
+      password: "", 
     });
   };
 
   const handleSaveUser = async () => {
     try {
       // Validate form
-      if (!newUser.userName || !newUser.email || !newUser.role || !newUser.password) {
+      if (!newUser.fullName || !newUser.email || !newUser.phone || !newUser.role || !newUser.password) {
         toast.error("All fields are required");
         return;
       }
 
       const userData = { ...newUser };
-      const response = await UserService.createUser(userData);
+      const response = await UserAdminService.createUser(userData);
       console.log("User created:", response);
       toast.success("User created successfully");
       
@@ -82,35 +85,41 @@ const UserManagement = () => {
       fetchUsers();
       
       // Reset form and state
-      setNewUser({ userName: "", email: "", role: "", password: "" });
+      setNewUser({ fullName: "", email: "", phone: "", role: "", password: "" });
       setIsAdding(false);
     } catch (error) {
       console.error("Error saving user:", error);
-      toast.error(error.response?.data?.message || "Failed to create user");
+      toast.error(error.message || "Failed to create user");
     }
   };
 
   const handleCancelAdd = () => {
     setIsAdding(false);
-    setNewUser({ userName: "", email: "", role: "", password: "" });
+    setNewUser({ fullName: "", email: "", phone: "", role: "", password: "" });
   };
 
-  const handleDeleteUser = (id) => {
-    setDeleteConfirmation({ show: true, userId: id });
+  const handleDeleteUser = (userId) => {
+    setDeleteConfirmation({ show: true, userId: userId });
   };
 
   const confirmDeleteUser = async () => {
     const idToDelete = deleteConfirmation.userId;
     try {
-      await UserService.deleteUser(idToDelete);
-      toast.success("User deleted successfully");
+      await UserAdminService.deleteUser(idToDelete);
       
       // Remove from local state
-      setUsers(users.filter((user) => user.id !== idToDelete));
+      setUsers(users.filter((user) => user.userId !== idToDelete));
+      
+      // Đóng hộp thoại xác nhận
       setDeleteConfirmation({ show: false, userId: null });
+      
+      toast.success("User deleted successfully");
     } catch (error) {
       console.error("Error deleting user:", error);
-      toast.error(error.response?.data?.message || "Failed to delete user");
+      toast.error(error.message || "Failed to delete user");
+      
+      // Vẫn đóng hộp thoại xác nhận ngay cả khi có lỗi
+      setDeleteConfirmation({ show: false, userId: null });
     }
   };
 
@@ -121,23 +130,26 @@ const UserManagement = () => {
   const handleEditUser = async (user) => {
     try {
       // Optionally fetch the latest user data
-      const userData = await UserService.getUserById(user.id);
-      setIsEditing(user.id);
+      const userData = await UserAdminService.getUserById(user.userId);
+      setIsEditing(user.userId);
       
       // Only include fields that can be updated
       setNewUser({
-        userName: userData.userName,
+        fullName: userData.fullName,
         email: userData.email,
+        phone: userData.phone,
         role: userData.role,
+        password: userData.password
       });
     } catch (error) {
       console.error("Error fetching user details:", error);
       toast.error("Failed to load user details");
       // Use the data we already have
-      setIsEditing(user.id);
+      setIsEditing(user.userId);
       setNewUser({
-        userName: user.userName,
+        fullName: user.fullName,
         email: user.email,
+        phone: user.phone || "",
         role: user.role,
       });
     }
@@ -145,27 +157,27 @@ const UserManagement = () => {
 
   const handleCancelEdit = () => {
     setIsEditing(null);
-    setNewUser({ userName: "", email: "", role: "" });
+    setNewUser({ fullName: "", email: "", phone: "", role: "" });
   };
 
   const handleUpdateUser = async () => {
     try {
       // Validate form
-      if (!newUser.userName || !newUser.email || !newUser.role) {
+      if (!newUser.fullName || !newUser.email || !newUser.phone || !newUser.role) {
         toast.error("All fields are required");
         return;
       }
 
-      const response = await UserService.updateUser(isEditing, newUser);
+      const response = await UserAdminService.updateUser(isEditing, newUser);
       console.log("User updated:", response);
       toast.success("User updated successfully");
       
       fetchUsers(); // Refresh the user list to get updated data
       setIsEditing(null);
-      setNewUser({ userName: "", email: "", role: "" });
+      setNewUser({ fullName: "", email: "", phone: "", role: "" });
     } catch (error) {
       console.error("Error updating user:", error);
-      toast.error(error.response?.data?.message || "Failed to update user");
+      toast.error(error.message || "Failed to update user");
     }
   };
 
@@ -180,8 +192,9 @@ const UserManagement = () => {
     
     const filtered = users.filter(
       user => 
-        user.userName?.toLowerCase().includes(value.toLowerCase()) ||
+        user.fullName?.toLowerCase().includes(value.toLowerCase()) ||
         user.email?.toLowerCase().includes(value.toLowerCase()) ||
+        user.phone?.toLowerCase().includes(value.toLowerCase()) ||
         user.role?.toLowerCase().includes(value.toLowerCase())
     );
     
@@ -219,9 +232,9 @@ const UserManagement = () => {
             <h2>Add New User</h2>
             <input
               type="text"
-              name="userName"
-              placeholder="User Name"
-              value={newUser.userName}
+              name="fullName"
+              placeholder="Full Name"
+              value={newUser.fullName}
               onChange={handleInputChange}
             />
             <input
@@ -229,6 +242,13 @@ const UserManagement = () => {
               name="email"
               placeholder="Email"
               value={newUser.email}
+              onChange={handleInputChange}
+            />
+            <input
+              type="tel"
+              name="phone"
+              placeholder="Phone Number"
+              value={newUser.phone}
               onChange={handleInputChange}
             />
             <input
@@ -244,9 +264,9 @@ const UserManagement = () => {
               onChange={handleInputChange}
             >
               <option value="">Select Role</option>
-              <option value="Admin">Admin</option>
-              <option value="Editor">Editor</option>
-              <option value="Viewer">Viewer</option>
+              <option value="admin">Admin</option>
+              <option value="editor">Editor</option>
+              <option value="viewer">Viewer</option>
             </select>
             <div className="form-buttons">
               <button onClick={handleSaveUser}>Save</button>
@@ -258,9 +278,9 @@ const UserManagement = () => {
             <h2>Edit User</h2>
             <input
               type="text"
-              name="userName"
-              placeholder="User Name"
-              value={newUser.userName}
+              name="fullName"
+              placeholder="Full Name"
+              value={newUser.fullName}
               onChange={handleInputChange}
             />
             <input
@@ -270,15 +290,22 @@ const UserManagement = () => {
               value={newUser.email}
               onChange={handleInputChange}
             />
+            <input
+              type="tel"
+              name="phone"
+              placeholder="Phone Number"
+              value={newUser.phone}
+              onChange={handleInputChange}
+            />
             <select
               name="role"
               value={newUser.role}
               onChange={handleInputChange}
             >
               <option value="">Select Role</option>
-              <option value="Admin">Admin</option>
-              <option value="Editor">Editor</option>
-              <option value="Viewer">Viewer</option>
+              <option value="admin">Admin</option>
+              <option value="editor">Editor</option>
+              <option value="viewer">Viewer</option>
             </select>
             <div className="form-buttons">
               <button onClick={handleUpdateUser}>Save</button>
@@ -292,6 +319,7 @@ const UserManagement = () => {
                 <th>ID</th>
                 <th>Name</th>
                 <th>Email</th>
+                <th>Phone</th>
                 <th>Role</th>
                 <th>Actions</th>
               </tr>
@@ -299,10 +327,11 @@ const UserManagement = () => {
             <tbody>
               {filteredUsers.length > 0 ? (
                 filteredUsers.map((user) => (
-                  <tr key={user.id}>
-                    <td>{user.id}</td>
-                    <td>{user.userName}</td>
+                  <tr key={user.userId}>
+                    <td>{user.userId}</td>
+                    <td>{user.fullName}</td>
                     <td>{user.email}</td>
+                    <td>{user.phone}</td>
                     <td>{user.role}</td>
                     <td>
                       <div className="action-buttons">
@@ -312,7 +341,7 @@ const UserManagement = () => {
                      
                         <button
                           className="delete"
-                          onClick={() => handleDeleteUser(user.id)}
+                          onClick={() => handleDeleteUser(user.userId)}
                         >
                           <FiTrash2 />
                         </button>
@@ -325,7 +354,7 @@ const UserManagement = () => {
                 ))
               ) : (
                 <tr>
-                  <td colSpan="5" className="empty-message">
+                  <td colSpan="6" className="empty-message">
                     {searchTerm ? "No users found matching your search" : "No users available"}
                   </td>
                 </tr>
